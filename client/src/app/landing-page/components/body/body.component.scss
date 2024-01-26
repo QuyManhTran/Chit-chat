@@ -1,0 +1,66 @@
+$images: (1, 2, 3, 4, 5, 6, 7);
+@mixin delay($time) {
+  animation-delay: calc(0.4s + 0.4s * $time);
+}
+
+@each $image in $images {
+  span.image-animation:nth-child(#{$image}) {
+    @include delay($image);
+  }
+}
+
+@keyframes appearImage {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes appearAvatar {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Class
+.image-animation {
+  animation-name: appearImage;
+  animation-duration: 400ms;
+  animation-fill-mode: backwards;
+}
+
+.avatar-animation {
+  animation-name: appearAvatar;
+  animation-duration: 400ms;
+  animation-fill-mode: backwards;
+}
+
+.un-active {
+  transition: all 0.4s ease;
+  transform: translateY(100px);
+  opacity: 0;
+}
+
+.active {
+  transform: translateY(0);
+  opacity: 1;
+
+  & ~ .seq-active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  & > .seq-active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

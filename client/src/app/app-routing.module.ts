@@ -5,7 +5,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 const routes: Routes = [
     {
         path: '',
-        component: LandingPageComponent,
+        loadChildren: () =>
+            import('./landing-page/landing-page.module').then((m) => m.LandingPageModule),
     },
 ];
 

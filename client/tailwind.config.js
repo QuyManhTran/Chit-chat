@@ -9,6 +9,7 @@ module.exports = {
           100: "#cec9c1",
         },
         cblack: {
+          400: "#111B21",
           500: "#1c1e21",
         },
         cyellow: {
