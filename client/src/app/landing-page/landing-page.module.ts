@@ -6,6 +6,8 @@ import { LandingPageRoutingModule } from './landing-page-routing.module';
 import { BodyComponent } from './components/body/body.component';
 import { ScrollDirective } from './directives/events/scroll.directive';
 import { PseudoClassDirective } from './directives/pseudo-class/pseudo-class.directive';
+import { FooterComponent } from './components/footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [
@@ -14,7 +16,8 @@ import { PseudoClassDirective } from './directives/pseudo-class/pseudo-class.dir
         BodyComponent,
         ScrollDirective,
         PseudoClassDirective,
+        FooterComponent,
     ],
-    imports: [CommonModule, LandingPageRoutingModule],
+    imports: [CommonModule, LandingPageRoutingModule, FontAwesomeModule],
 })
 export class LandingPageModule {}

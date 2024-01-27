@@ -32,6 +32,20 @@ $images: (1, 2, 3, 4, 5, 6, 7);
 }
 
 // Class
+.animation-delay-1 {
+  animation-delay: 2s;
+  animation-name: appearImage;
+  animation-duration: 400ms;
+  animation-fill-mode: backwards;
+}
+
+.animation-delay-2 {
+  animation-delay: 2.4s;
+  animation-name: appearImage;
+  animation-duration: 400ms;
+  animation-fill-mode: backwards;
+}
+
 .image-animation {
   animation-name: appearImage;
   animation-duration: 400ms;

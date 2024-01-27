@@ -3,6 +3,11 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
+      screens: {
+        xs: "480px",
+        bmd: "968px",
+        lmd: "880px",
+      },
       colors: {
         primary: "#25D366",
         border: {
@@ -15,6 +20,15 @@ module.exports = {
         cyellow: {
           400: "#FFEBCF",
         },
+        cwhite: {
+          500: "#F0F4F9",
+        },
+      },
+      transformOrigin: {
+        "bottom-center": "bottom center",
+      },
+      transitionTimingFunction: {
+        wavy: "cubic-bezier(0.66, 0, 0.34, 1)",
       },
     },
   },

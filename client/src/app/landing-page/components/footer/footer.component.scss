@@ -1,0 +1,31 @@
+h4 {
+  & ~ span {
+    position: relative;
+    width: fit-content;
+    cursor: pointer;
+    &::after {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 105%;
+      width: 0%;
+      height: 2px;
+      background-color: #fff;
+      transition: all 0.2s ease;
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.brand {
+  @apply z-[100] relative w-12 h-12 rounded-[24px] border flex justify-center items-center overflow-hidden border-white text-white cursor-pointer transition-all duration-500 hover:border-cblack-400 hover:text-cblack-400 after:absolute after:content-[''] after:bg-transparent hover:after:bg-primary hover:after:bottom-0 after:-bottom-full after:left-0 after:z-[0] after:w-full after:h-full after:transform after:scale-0 hover:after:transform hover:after:scale-100 after:origin-bottom-center after:rounded-[50%] after:transition-all after:ease-in-out after:duration-[0.8s];
+}
+
+.animation-button {
+  @apply after:absolute after:content-[''] after:top-0 after:left-0 after:h-[167px] after:w-full after:transform after:scale-100 after:translate-y-[67px] after:bg-white after:rounded-[50%] after:duration-1000 after:ease-wavy after:z-0 hover:after:transform hover:after:scale-[1.47] hover:after:translate-y-0;
+}

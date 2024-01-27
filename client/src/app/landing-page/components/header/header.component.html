@@ -5,18 +5,26 @@
         </a>
         <nav>
             <ul class="flex flex-row gap-12">
-                <li class="text-cblack-500 cursor-pointer font-normal text-lg">Feature</li>
-                <li class="text-cblack-500 cursor-pointer font-normal text-lg">Privacy</li>
-                <li class="text-cblack-500 cursor-pointer font-normal text-lg">Help Center</li>
-                <li class="text-cblack-500 cursor-pointer font-normal text-lg">Blog</li>
-                <li class="text-cblack-500 cursor-pointer font-normal text-lg">Businesses</li>
-                <li class="text-cblack-500 cursor-pointer font-normal text-lg">Download</li>
-                <li class="text-cblack-500 cursor-pointer font-normal text-lg">Login</li>
+                <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Feature
+                </li>
+                <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Privacy
+                </li>
+                <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Help Center
+                </li>
+                <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Blog</li>
+                <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Businesses
+                </li>
+                <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Download
             </ul>
         </nav>
-        <button type="button"
-            class="flex-none bg-primary rounded-[50px] border border-solid border-cblack-500 text-center py-[10px] px-3">
-            <span class="text-xl text-black font-medium">Sign up for free</span>
-        </button>
+        <div class="flex flex-row items-center gap-4">
+            <li class="text-cblack-500 cursor-pointer list-none font-normal text-lg hover:text-primary active-nav">Login
+            </li>
+            <span class="w-[1px] bg-primary h-5"></span>
+            <button type="button"
+                class="relative flex-none overflow-hidden bg-primary rounded-[50px] transition-[color,_border-color,_background-color] duration-[0.33,_0.5s,_0.33s] ease-[linear,_ease-out,_linear] delay-[0.5s,_0s,_0s] text-cblack-500 hover:text-white border border-solid border-cblack-500 text-center py-[10px] px-3 animation-button">
+                <span class="relative text-xl font-medium z-[1]">Sign up for free</span>
+            </button>
+        </div>
     </div>
 </header>

@@ -2,3 +2,11 @@
   background-color: rgba(255, 235, 207, 0.8) !important;
   border-bottom: 1px solid #cec9c1;
 }
+
+li.active-nav {
+  @apply relative after:absolute after:content-[''] after:top-[102%] after:left-0 after:w-0 after:h-[1.5px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full;
+}
+
+.animation-button {
+  @apply after:absolute after:content-[''] after:top-0 after:left-0 after:h-[167px] after:w-full after:transform after:scale-100 after:translate-y-[67px] after:bg-black after:rounded-[50%] after:duration-1000 after:ease-wavy after:z-0 hover:after:transform hover:after:scale-[1.47] hover:after:translate-y-0;
+}

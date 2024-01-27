@@ -1,0 +1,68 @@
+<footer class="bg-cblack-400 pt-[48px] lg:pt-[98px] px-5 pb-[20px] gap-[60px] lg:gap-[120px] flex flex-col">
+    <div class="flex flex-row justify-between items-center lg:hidden">
+        <img src="./assets/images/landing-page/logo-white.png" alt="logo-white" class="w-fit h-fit">
+        <button type="button"
+            class="relative flex-none bg-primary rounded-[50px] border border-solid border-cblack-500 text-center py-[12px] px-4 w-fit overflow-hidden animation-button">
+            <span class="relative text-xl text-black font-medium w-fit select-none z-[1]">Sign up for free</span>
+        </button>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-12 sm:gap-6 lg:px-[120px]">
+        <div class="hidden col-span-2 lg:flex flex-col justify-between">
+            <img src="./assets/images/landing-page/logo-white.png" alt="logo-white" class="w-fit h-fit">
+            <button type="button"
+                class="relative flex-none bg-primary rounded-[50px] border border-solid border-cblack-500 text-center py-[12px] px-4 w-fit overflow-hidden animation-button">
+                <span class="relative text-xl text-black font-medium w-fit select-none z-[1]">Sign up for free</span>
+            </button>
+        </div>
+        <div class="col-span-1 flex flex-col gap-6 select-none">
+            <h4 class="text-sm font-normal text-cwhite-500 select-text">what we do</h4>
+            <span class="text-lg text-white font-normal">Feature</span>
+            <span class="text-lg text-white font-normal">Blog</span>
+            <span class="text-lg text-white font-normal">Security</span>
+            <span class="text-lg text-white font-normal">Businesses</span>
+        </div>
+        <div class="col-span-1 flex flex-col gap-6 select-none">
+            <h4 class="text-sm font-normal text-cwhite-500 select-text">Introduction</h4>
+            <span class="text-lg text-white font-normal">About us</span>
+            <span class="text-lg text-white font-normal">Job</span>
+            <span class="text-lg text-white font-normal">Brand</span>
+            <span class="text-lg text-white font-normal">Privacy</span>
+        </div>
+        <div class="col-span-1 flex flex-col gap-6 select-none">
+            <h4 class="text-sm font-normal text-cwhite-500 select-text">Use Whatsapp</h4>
+            <span class="text-lg text-white font-normal">Android</span>
+            <span class="text-lg text-white font-normal">Iphone</span>
+            <span class="text-lg text-white font-normal">Mac/Computer</span>
+            <span class="text-lg text-white font-normal">Whatsapp Web</span>
+        </div>
+        <div class="col-span-1 flex flex-col gap-6 select-none">
+            <h4 class="text-sm font-normal text-cwhite-500 select-text">Need help?</h4>
+            <span class="text-lg text-white font-normal">Contact us</span>
+            <span class="text-lg text-white font-normal">Help center</span>
+            <span class="text-lg text-white font-normal">Download</span>
+            <span class="text-lg text-white font-normal">Security consulting</span>
+        </div>
+
+    </div>
+    <div
+        class="relative flex flex-col md:flex-row w-full justify-center items-center gap-6 md:gap-[60px] px-[60px] md:px-[120px] after:content-[''] after:absolute after:top-[-32px] after:left-0 after:w-full after:h-[0.5px] after:bg-[#33463f]">
+        <div class="flex flex-row gap-[60px]">
+            <span class="text-xs text-cwhite-500 font-normal">{{currentDate.getFullYear()}} © WhatsApp LLC</span>
+            <span class="text-xs text-cwhite-500 font-normal">Terms and privacy policy</span>
+        </div>
+        <div class="flex flex-row gap-8 sm:gap-4 items-center">
+            <span class="brand" title="twitter">
+                <fa-icon [icon]="faTwitter" class="z-10 transition-all duration-[0.3s]"></fa-icon>
+            </span>
+            <span class="brand" title="instagrams">
+                <fa-icon [icon]="faInstagram" class="z-10 transition-all duration-[0.3s]"></fa-icon>
+            </span>
+            <span class="brand" title="youtube">
+                <fa-icon [icon]="faYoutube" class="z-10 transition-all duration-[0.3s]"></fa-icon>
+            </span>
+            <span class="brand" title="facebook">
+                <fa-icon [icon]="faFacebook" class="z-10 transition-all duration-[0.3s]"></fa-icon>
+            </span>
+        </div>
+    </div>
+</footer>
