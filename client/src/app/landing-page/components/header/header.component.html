@@ -1,10 +1,15 @@
 <header class="z-[1000] top-0 fixed h-20 w-full bg-cyellow-400 flex items-center" #header>
-    <div class="w-full px-10 flex flex-row justify-between items-center">
-        <a href="http://localhost:4200/">
+    <div class="w-full px-5 sm:px-10 flex flex-row justify-between items-center">
+        <button type="button" (click)="onToggleMenu()" class="bmd:hidden">
+            <span class="material-symbols-outlined text-[28px]">
+                menu
+            </span>
+        </button>
+        <a href="http://localhost:4200/" class="flex-none">
             <img src="./assets/images/landing-page/logo.png" class="w-[130px] h-[30px]" alt="chit-chat">
         </a>
-        <nav>
-            <ul class="flex flex-row gap-12">
+        <nav class="hidden bmd:block">
+            <ul class="hidden bmd:flex bmd:flex-row bmd:gap-8 lg:gap-10 xl:gap-16">
                 <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Feature
                 </li>
                 <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Privacy
@@ -14,7 +19,7 @@
                 <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Blog</li>
                 <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Businesses
                 </li>
-                <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Download
+                <!-- <li class="text-cblack-500 cursor-pointer font-normal text-lg hover:text-primary active-nav">Download -->
             </ul>
         </nav>
         <div class="flex flex-row items-center gap-4">
@@ -22,9 +27,86 @@
             </li>
             <span class="w-[1px] bg-primary h-5"></span>
             <button type="button"
-                class="relative flex-none overflow-hidden bg-primary rounded-[50px] transition-[color,_border-color,_background-color] duration-[0.33,_0.5s,_0.33s] ease-[linear,_ease-out,_linear] delay-[0.5s,_0s,_0s] text-cblack-500 hover:text-white border border-solid border-cblack-500 text-center py-[10px] px-3 animation-button">
+                class="relative hidden sm:block flex-none overflow-hidden bg-primary rounded-[50px] transition-[color,_border-color,_background-color] duration-[0.33,_0.5s,_0.33s] ease-[linear,_ease-out,_linear] delay-[0.5s,_0s,_0s] text-cblack-500 hover:text-white border border-solid border-cblack-500 text-center py-[10px] px-3 animation-button">
                 <span class="relative text-xl font-medium z-[1]">Sign up for free</span>
             </button>
+            <li
+                class="sm:hidden list-item text-cblack-500 cursor-pointer list-none font-normal text-lg hover:text-primary active-nav">
+                Sign up
+            </li>
         </div>
     </div>
 </header>
+@if (isOpenMenu) {
+<app-modal [animate]="modalType" (CloseModalEvent)="onCloseModal()">
+    <div #content class="xs:w-1/2 min-w-[360px] w-full h-full flex flex-col duration-[0.4s] ease-in-out"
+        (click)="stopPropagationHandler($event)">
+        <div class="bg-white">
+            <div class="flex flex-row gap-[120px] px-6 py-6 items-center">
+                <button type="button" (click)="onToggleMenu()"
+                    class="w-9 h-9 rounded-[50%] bg-transparent hover:bg-cgrey-300 transition-all flex justify-center items-center">
+                    <span class="material-symbols-outlined text-[28px]">
+                        close
+                    </span>
+                </button>
+                <div>
+                    <img src="./assets/images/landing-page/logo.png" class="w-[130px] h-[30px]" alt="chit-chat">
+                </div>
+            </div>
+            <div class="px-6">
+                <ul class="flex flex-col gap-2">
+                    <li
+                        class="text-cblack-500 cursor-pointer font-normal text-[32px] py-2 border-t border-solid border-t-cblack-300 hover:text-primary">
+                        Feature
+                    </li>
+                    <li
+                        class="text-cblack-500 cursor-pointer font-normal text-[32px] py-2 border-t border-solid border-t-cblack-300 hover:text-primary">
+                        Privacy
+                    </li>
+                    <li
+                        class="text-cblack-500 cursor-pointer font-normal text-[32px] py-2 border-t border-solid border-t-cblack-300 hover:text-primary">
+                        Help
+                        Center
+                    </li>
+                    <li
+                        class="text-cblack-500 cursor-pointer font-normal text-[32px] py-2 border-t border-solid border-t-cblack-300 hover:text-primary">
+                        Blog
+                    </li>
+                    <li
+                        class="text-cblack-500 cursor-pointer font-normal text-[32px] py-2 border-t border-solid border-t-cblack-300 hover:text-primary">
+                        Businesses
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="bg-cblack-400 flex-grow">
+            <div class="flex flex-col gap-8 pt-6 w-full justify-center items-center">
+                <button type="button"
+                    class="relative flex-none overflow-hidden bg-primary rounded-[50px] transition-[color,_border-color,_background-color] duration-[0.33,_0.5s,_0.33s] ease-[linear,_ease-out,_linear] delay-[0.5s,_0s,_0s] text-cblack-500 hover:text-white border border-solid border-cblack-500 text-center py-[10px] px-3 animation-button">
+                    <span class="relative text-xl font-medium z-[1]">Sign up for free</span>
+                </button>
+                <div class="flex flex-row w-full gap-8 items-center justify-center pt-6 border-t border-t-[#33463f]">
+                    <span class="brand" title="twitter">
+                        <fa-icon [icon]="faTwitter" class="z-10 transition-all duration-[0.3s]"></fa-icon>
+                    </span>
+                    <span class="brand" title="instagrams">
+                        <fa-icon [icon]="faInstagram" class="z-10 transition-all duration-[0.3s]"></fa-icon>
+                    </span>
+                    <span class="brand" title="youtube">
+                        <fa-icon [icon]="faYoutube" class="z-10 transition-all duration-[0.3s]"></fa-icon>
+                    </span>
+                    <span class="brand" title="facebook">
+                        <fa-icon [icon]="faFacebook" class="z-10 transition-all duration-[0.3s]"></fa-icon>
+                    </span>
+                </div>
+                <div class="flex flex-row w-full justify-center gap-[60px] pt-6 border-t border-t-[#33463f]">
+                    <span class="text-xs text-cwhite-500 font-normal">{{currentDate.getFullYear()}} © WhatsApp
+                        LLC</span>
+                    <span class="text-xs text-cwhite-500 font-normal">Terms and privacy policy</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</app-modal>
+}

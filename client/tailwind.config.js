@@ -14,8 +14,12 @@ module.exports = {
           100: "#cec9c1",
         },
         cblack: {
+          300: "#00000080",
           400: "#111B21",
           500: "#1c1e21",
+        },
+        cgrey: {
+          300: "#d0d1d3",
         },
         cyellow: {
           400: "#FFEBCF",
