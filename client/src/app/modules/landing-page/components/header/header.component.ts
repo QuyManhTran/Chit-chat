@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { ModalAnimationType } from '../shares/modal/modal.interface';
+import { ModalAnimationType } from '@enums/app.enum';
 import { faFacebookF, faInstagram, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
 @Component({
     selector: 'app-header',

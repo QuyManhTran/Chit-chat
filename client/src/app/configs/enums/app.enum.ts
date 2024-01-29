@@ -1,3 +1,8 @@
+export enum LoadingType {
+    FAST = 'fast',
+    WAITING = 'waiting',
+}
+
 export enum ModalAnimationType {
     TOP = 'top',
     LEFT = 'left',

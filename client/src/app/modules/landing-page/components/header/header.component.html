@@ -6,7 +6,7 @@
             </span>
         </button>
         <a href="http://localhost:4200/" class="flex-none">
-            <img src="./assets/images/landing-page/logo.png" class="w-[130px] h-[30px]" alt="chit-chat">
+            <img src="./assets/images/public/logoes/logo.png" class="w-[130px] h-[30px]" alt="chit-chat">
         </a>
         <nav class="hidden bmd:block">
             <ul class="hidden bmd:flex bmd:flex-row bmd:gap-8 lg:gap-10 xl:gap-16">
@@ -23,14 +23,17 @@
             </ul>
         </nav>
         <div class="flex flex-row items-center gap-4">
-            <li class="text-cblack-500 cursor-pointer list-none font-normal text-lg hover:text-primary active-nav">Login
-            </li>
+            <a routerLink="/auth/login">
+                <li class="text-cblack-500 cursor-pointer list-none font-normal text-lg hover:text-primary active-nav">
+                    Login
+                </li>
+            </a>
             <span class="w-[1px] bg-primary h-5"></span>
-            <button type="button"
+            <button type="button" routerLink="/auth/sign-up"
                 class="relative hidden sm:block flex-none overflow-hidden bg-primary rounded-[50px] transition-[color,_border-color,_background-color] duration-[0.33,_0.5s,_0.33s] ease-[linear,_ease-out,_linear] delay-[0.5s,_0s,_0s] text-cblack-500 hover:text-white border border-solid border-cblack-500 text-center py-[10px] px-3 animation-button">
                 <span class="relative text-xl font-medium z-[1]">Sign up for free</span>
             </button>
-            <li
+            <li routerLink="/auth/sign-up"
                 class="sm:hidden list-item text-cblack-500 cursor-pointer list-none font-normal text-lg hover:text-primary active-nav">
                 Sign up
             </li>
@@ -50,7 +53,7 @@
                     </span>
                 </button>
                 <div>
-                    <img src="./assets/images/landing-page/logo.png" class="w-[130px] h-[30px]" alt="chit-chat">
+                    <img src="./assets/images/public/logoes/logo.png" class="w-[130px] h-[30px]" alt="chit-chat">
                 </div>
             </div>
             <div class="px-6">
@@ -81,7 +84,7 @@
         </div>
         <div class="bg-cblack-400 flex-grow">
             <div class="flex flex-col gap-8 pt-6 w-full justify-center items-center">
-                <button type="button"
+                <button type="button" routerLink="/auth/sign-up"
                     class="relative flex-none overflow-hidden bg-primary rounded-[50px] transition-[color,_border-color,_background-color] duration-[0.33,_0.5s,_0.33s] ease-[linear,_ease-out,_linear] delay-[0.5s,_0s,_0s] text-cblack-500 hover:text-white border border-solid border-cblack-500 text-center py-[10px] px-3 animation-button">
                     <span class="relative text-xl font-medium z-[1]">Sign up for free</span>
                 </button>

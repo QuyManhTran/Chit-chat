@@ -1,1 +1,16 @@
+@if (!isLoading) {
 <router-outlet></router-outlet>
+}
+@else {
+<div
+    class="absolute top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center {{loadingType === 'waiting' && 'logo-bounce'}}">
+    <div class="relative w-[240px] h-[240px] -translate-y-[50%]">
+        <img src="./assets/images/public/logoes/WhatsApp.svg" alt="loading..." class="relative z-[1] animate-pulse">
+        <div class="absolute z-0 top-0 left-0 right-0 bottom-0 logo-aniamtion-1 bg-primary rounded-[50%]"></div>
+        <div class="absolute z-0 top-0 left-0 right-0 bottom-0 logo-aniamtion-2 bg-primary rounded-[50%]"></div>
+    </div>
+    <div>
+        <h2 class="text-[28px] text-primary font-medium">Processing...</h2>
+    </div>
+</div>
+}

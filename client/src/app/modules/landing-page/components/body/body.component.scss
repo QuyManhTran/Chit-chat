@@ -59,8 +59,8 @@ $images: (1, 2, 3, 4, 5, 6, 7);
 }
 
 .un-active {
-  transition: all 0.4s ease;
-  transform: translateY(100px);
+  transition: all 0.4s ease-in-out;
+  transform: translateY(150px);
   opacity: 0;
 }
 
