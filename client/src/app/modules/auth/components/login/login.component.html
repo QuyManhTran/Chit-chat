@@ -1,0 +1,74 @@
+<div class="flex flex-col items-center max-w-[380px] ml-20">
+    <h2 class="text-[54px] mb-12 text-cblack-500 font-bold -tracking-wider">Sign in</h2>
+
+    <form class="w-full flex flex-col gap-6">
+        <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
+            <input type="email" name="email" id="email"
+                class="order-2 block py-3 px-0 w-full text-lg text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer"
+                placeholder=" " required />
+            <span
+                class="material-symbols-rounded order-1 text-[28px] text-cgrey-400 transition-all peer-focus:text-primary">
+                person
+            </span>
+            <label for="email"
+                class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-semibold duration-300 transform -translate-y-6 scale-75 top-3 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
+                address</label>
+            <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
+            </div>
+            <div
+                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:bg-primary peer-focus:w-full peer-focus:-translate-x-1/2">
+            </div>
+        </div>
+
+        <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
+
+            <input type="{{isHiddenPass ? 'password' : 'text'}}" name="password" id="password"
+                class="order-2 block py-3 px-0 w-full text-lg text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer"
+                placeholder=" " required />
+            <span
+                class="material-symbols-rounded password order-1 text-[28px] text-cgrey-400 transition-all peer-focus:text-primary">
+                lock
+            </span>
+            <label for="password" (click)="onChangeViewPass()"
+                class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-semibold duration-300 -translate-y-6 scale-75 top-3 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                Password
+            </label>
+            <input type="checkbox" id="eye" class="hidden peer">
+            <label for="eye" (click)="onChangeViewPass()"
+                class="hidden absolute cursor-pointer right-0 text-[28px] text-cgrey-400 top-3 peer-checked:block">
+                <span class="material-symbols-outlined eye">
+                    visibility
+                </span>
+            </label>
+            <label for="eye" (click)="onChangeViewPass()"
+                class="absolute cursor-pointer right-0 text-[28px] text-cgrey-400 top-3 peer-checked:hidden">
+                <span class="material-symbols-outlined eye">
+                    visibility_off
+                </span>
+            </label>
+
+            <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
+            </div>
+            <div
+                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:bg-primary peer-focus:w-full peer-focus:-translate-x-1/2">
+            </div>
+        </div>
+    </form>
+    <div class="self-start pt-6 flex flex-row w-full justify-between">
+        <div class="flex flex-row items-center gap-3">
+            <span
+                class="w-5 h-5 bg-transparent border border-cgrey-400 rounded-[50%] flex flex-row justify-center items-center overflow-hidden cursor-default"
+                (click)="onRememberMe()">
+                <span
+                    class="material-symbols-outlined text-lg bg-primary w-full text-white {{!isRemember && 'hidden'}}">
+                    check
+                </span>
+            </span>
+            <label for="rememeber" class="text-sm text-cgrey-500 font-medium">Remember me</label>
+        </div>
+        <span
+            class="text-sm text-cgrey-500 font-medium hover:cursor-pointer hover:underline hover:decoration-cgrey-500 hover:decoration-1 hover:underline-offset-3">Forgot
+            Password?</span>
+    </div>
+    <div class="w-full"><app-auth-action [isLogin]="true"></app-auth-action></div>
+</div>

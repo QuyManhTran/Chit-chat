@@ -10,6 +10,7 @@ module.exports = {
       },
       colors: {
         primary: "#25D366",
+        secondary: "#38d39f",
         border: {
           100: "#cec9c1",
         },
@@ -19,7 +20,10 @@ module.exports = {
           500: "#1c1e21",
         },
         cgrey: {
+          200: "#edecec",
           300: "#d0d1d3",
+          400: "#d9d9d9",
+          500: "#999",
         },
         cyellow: {
           400: "#FFEBCF",

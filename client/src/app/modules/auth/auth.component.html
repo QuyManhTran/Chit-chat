@@ -1,1 +1,14 @@
-<router-outlet></router-outlet>
+<div class="fixed top-2 left-2 flex flex-col gap-2 items-center pl-2">
+    <img src="./assets/images/public/logoes/logo.png" alt="WhatsApp" class="w-[130px] h-[30px] object-contain">
+</div>
+<div class="fixed left-0 bottom-0 w-fit max-w-[600px] -z-10">
+    <img src="./assets/images/auth-page/wave.png" class="h-full" alt="wave">
+</div>
+<main class="w-full h-[100vh] overflow-hidden grid grid-cols-2 gap-20 px-8">
+    <section class="flex justify-end items-center col-span-1">
+        <img src="./assets/images/auth-page/mobile-man.svg" alt="mobile-man">
+    </section>
+    <section class="flex flex-col pt-6">
+        <router-outlet></router-outlet>
+    </section>
+</main>
