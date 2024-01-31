@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'app-auth-action',
@@ -7,4 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class AuthActionComponent {
     @Input() isLogin!: boolean;
+    @Input() isDisable!: boolean;
+    @Output() SubmitEvent: EventEmitter<void> = new EventEmitter<void>();
+
+    onSubmit = () => {
+        this.SubmitEvent.emit();
+    };
 }

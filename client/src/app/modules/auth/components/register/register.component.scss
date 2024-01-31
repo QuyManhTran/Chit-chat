@@ -1,3 +1,19 @@
 .material-symbols-outlined.eye {
   font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
 }
+
+.error {
+  animation: ErrorAnimation 0.15s ease-in forwards;
+}
+
+@keyframes ErrorAnimation {
+  from {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+
+  to {
+    transform: translateY(12px);
+    opacity: 1;
+  }
+}

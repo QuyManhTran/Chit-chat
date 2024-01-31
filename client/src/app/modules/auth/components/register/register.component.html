@@ -1,84 +1,128 @@
 <div class="flex flex-col min-w-[400px] max-w-[500px]">
     <h2 class="text-[54px] mb-12 text-cblack-500 font-bold -tracking-wider text-center">Sign up</h2>
-
-    <form class="w-full flex flex-col gap-6">
+    <form class="w-full flex flex-col pb-2 {{RegisterForm.touched && RegisterForm.invalid ? 'gap-8':'gap-6'}}"
+        [formGroup]="RegisterForm">
 
         <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
-            <input type="name" name="name" id="name"
-                class="order-2 block py-3 px-0 w-full text-lg text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer"
+            <input spellcheck="false" type="name" name="name" id="name" formControlName="name"
+                class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched && 'text-error'}}"
                 placeholder=" " required />
             <span
-                class="material-symbols-rounded order-1 text-[28px] text-cgrey-400 transition-all peer-focus:text-primary">
+                class="material-symbols-rounded order-1 text-[28px] text-cgrey-400 transition-all {{RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched ? 'text-error':'peer-focus:text-primary'}}">
                 person
             </span>
             <label for="name"
-                class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-semibold duration-300 transform -translate-y-6 scale-[0.6] top-3 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6">User
+                class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-medium duration-300 transform -translate-y-6 scale-[0.6] top-2 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6 {{RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched && 'text-error'}}">User
                 name</label>
             <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
             </div>
             <div
-                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:bg-primary peer-focus:w-full peer-focus:-translate-x-1/2">
+                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched ? 'bg-error w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
+            </div>
+            <div *ngIf="RegisterForm.get('name')?.touched" class="absolute -bottom-2 left-0 text-xs text-error error">
+                <span
+                    *ngIf="!RegisterForm.get('name')?.hasError('required') && RegisterForm.get('name')?.hasError('minlength')">
+                    User name must be at least 4 characters
+                </span>
+                <span *ngIf="RegisterForm.get('name')?.hasError('required')">
+                    You must enter a value
+                </span>
             </div>
         </div>
 
         <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
-            <input type="email" name="email" id="email"
-                class="order-2 block py-3 px-0 w-full text-lg text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer"
+            <input spellcheck="false" type="email" name="email" id="email" formControlName="email"
+                class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{RegisterForm.get('email')?.errors && RegisterForm.get('email')?.touched && 'text-error'}}"
                 placeholder=" " required />
             <span
-                class="material-symbols-rounded order-1 text-[28px] text-cgrey-400 transition-all peer-focus:text-primary">
+                class="material-symbols-rounded order-1 text-[28px] text-cgrey-400 transition-all {{RegisterForm.get('email')?.errors && RegisterForm.get('email')?.touched ? 'text-error':'peer-focus:text-primary'}}">
                 mail
             </span>
             <label for="email"
-                class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-semibold duration-300 transform -translate-y-6 scale-[0.6] top-3 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6">Email
+                class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-medium duration-300 transform -translate-y-6 scale-[0.6] top-2 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6 {{(RegisterForm.get('email')?.errors && RegisterForm.get('email')?.touched) && 'text-error'}}">Email
                 address</label>
             <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
             </div>
             <div
-                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:bg-primary peer-focus:w-full peer-focus:-translate-x-1/2">
+                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{RegisterForm.get('email')?.errors && RegisterForm.get('email')?.touched ? 'bg-error w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
+            </div>
+            <div *ngIf="RegisterForm.get('email')?.touched" class="absolute -bottom-2 left-0 text-xs text-error error">
+                <span
+                    *ngIf="!RegisterForm.get('email')?.hasError('required') && RegisterForm.get('email')?.hasError('email')">
+                    Not a valid email
+                </span>
+                <span *ngIf="RegisterForm.get('email')?.hasError('required')">
+                    You must enter a value
+                </span>
             </div>
         </div>
         <div class="flex flex-row gap-3">
             <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
-                <input type="password" name="password" id="password"
-                    class="order-2 block py-3 px-0 w-full text-lg text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer"
+                <input spellcheck="false" type="password" name="password" id="password" formControlName="password"
+                    class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched && 'text-error'}}"
                     placeholder=" " required />
                 <span
-                    class="material-symbols-rounded password order-1 text-[28px] text-cgrey-400 transition-all peer-focus:text-primary">
+                    class="material-symbols-rounded password order-1 text-[28px] text-cgrey-400 transition-all {{RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched ? 'text-error':'peer-focus:text-primary'}}">
                     lock
                 </span>
                 <label for="password"
-                    class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-semibold duration-300 -translate-y-6 scale-[0.6] top-3 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6">
+                    class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-medium duration-300 -translate-y-6 scale-[0.6] top-2 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6 {{RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched && 'text-error'}}">
                     Password
                 </label>
 
                 <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
                 </div>
                 <div
-                    class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:bg-primary peer-focus:w-full peer-focus:-translate-x-1/2">
+                    class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched ? 'bg-error w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
+                </div>
+                <div *ngIf="RegisterForm.get('password')?.touched"
+                    class="absolute top-[90%] left-0 text-xs leading-[12px] text-error error">
+                    <span
+                        *ngIf="!RegisterForm.get('password')?.hasError('required') && RegisterForm.get('password')?.hasError('pattern')">
+                        Password must be at least 8 characters: a special character, a digit, a letter
+                    </span>
+                    <span *ngIf="RegisterForm.get('password')?.hasError('required')">
+                        You must enter a value
+                    </span>
                 </div>
             </div>
 
             <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
-                <input type="password" name="password" id="password"
-                    class="order-2 block py-3 px-0 w-full text-lg text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer"
+                <input spellcheck="false" type="password" name="confirmPassword" id="confirmPassword"
+                    formControlName="confirmPassword"
+                    class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{(RegisterForm.get('confirmPassword')?.errors || RegisterForm.errors?.['mismatch']) && RegisterForm.get('confirmPassword')?.touched && 'text-error'}}"
                     placeholder=" " required />
                 <span
-                    class="material-symbols-rounded password order-1 text-[28px] text-cgrey-400 transition-all peer-focus:text-primary">
+                    class="material-symbols-rounded password order-1 text-[28px] text-cgrey-400 transition-all {{(RegisterForm.get('confirmPassword')?.errors || RegisterForm.errors?.['mismatch']) && RegisterForm.get('confirmPassword')?.touched ? 'text-error':'peer-focus:text-primary'}}">
                     lock
                 </span>
-                <label for="password"
-                    class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-semibold duration-300 -translate-y-6 scale-[0.6] top-3 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6">
+                <label for="confirmPassword"
+                    class="peer-focus:font-medium absolute text-[20px] text-gray-500 font-medium duration-300 -translate-y-6 scale-[0.6] top-2 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6 {{(RegisterForm.get('confirmPassword')?.errors || RegisterForm.errors?.['mismatch']) && RegisterForm.get('confirmPassword')?.touched && 'text-error'}}">
                     Confirm password
                 </label>
 
                 <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
                 </div>
                 <div
-                    class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:bg-primary peer-focus:w-full peer-focus:-translate-x-1/2">
+                    class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{(RegisterForm.get('confirmPassword')?.errors || RegisterForm.errors?.['mismatch']) && RegisterForm.get('confirmPassword')?.touched ? 'bg-error w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
                 </div>
+
+                <div *ngIf="RegisterForm.get('confirmPassword')?.touched"
+                    class="absolute top-[90%] left-0 text-xs leading-[12px] text-error error">
+                    <span
+                        *ngIf="!RegisterForm.get('confirmPassword')?.hasError('required') && RegisterForm.errors?.['mismatch']">
+                        Password does not match
+                    </span>
+                    <span *ngIf="RegisterForm.get('confirmPassword')?.hasError('required')">
+                        You must enter a value
+                    </span>
+                </div>
+
             </div>
         </div>
     </form>
-    <div class="w-full"><app-auth-action [isLogin]="false"></app-auth-action></div>
+    <div class="w-full">
+        <app-auth-action [isLogin]="false" [isDisable]="RegisterForm.invalid" (SubmitEvent)="onSubmit()">
+        </app-auth-action>
+    </div>
 </div>
