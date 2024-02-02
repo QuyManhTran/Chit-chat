@@ -25,7 +25,10 @@
       "@interfaces/*": ["src/app/configs/interfaces/*"],
       "@enums/*": ["src/app/configs/enums/*"],
       "@modules/*": ["src/app/modules/*"],
-      "@envs/*": ["src/environments/*"]
+      "@envs/*": ["src/environments/*"],
+      "@services/*": ["src/app/services/*"],
+      "@interceptors/*": ["src/app/interceptors/*"],
+      "@guards/*": ["src/app/guards/*"]
     }
   },
   "angularCompilerOptions": {

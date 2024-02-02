@@ -10,6 +10,6 @@ import { ENVIRONMENT_SERVICE_CONFIG } from 'src/app/configs/tokens/environment.t
 export class AuthComponent implements OnInit {
     constructor(@Inject(ENVIRONMENT_SERVICE_CONFIG) private env_config: ENV) {}
     ngOnInit(): void {
-        console.log(this.env_config);
+        // console.log(this.env_config);
     }
 }
