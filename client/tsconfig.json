@@ -24,7 +24,8 @@
     "paths": {
       "@interfaces/*": ["src/app/configs/interfaces/*"],
       "@enums/*": ["src/app/configs/enums/*"],
-      "@modules/*": ["src/app/modules/*"]
+      "@modules/*": ["src/app/modules/*"],
+      "@envs/*": ["src/environments/*"]
     }
   },
   "angularCompilerOptions": {

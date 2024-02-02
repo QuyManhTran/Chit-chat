@@ -9,7 +9,7 @@
         <span class="h-[0.5px] flex-grow bg-cgrey-200"></span>
     </div>
     <div class="flex flex-col gap-3">
-        <button
+        <button type="button" (click)="onGoogle()"
             class="h-[50px] flex items-center justify-center gap-2 border border-solid border-cgrey-200 rounded-[25px] bg-cgrey-200">
             <img src="./assets/images/auth-page/google-icon.svg" alt="google-icon" class="w-6 h-6">
             <span class="text-cblack-500 text-xl font-semibold">Google</span>
@@ -21,7 +21,7 @@
             <span class="text-cblack-500 text-xl font-semibold">Facebook</span>
         </button>
     </div>
-    <div class="text-sm font-medium text-cgrey-500 mt-4 text-center">
+    <div class="text-sm font-medium text-cgrey-500 {{isLogin ? 'mt-4':'mt-0'}} text-center">
         <span *ngIf="isLogin">Don't have an account? </span>
         <span *ngIf="!isLogin">Already have an account? </span>
         <a [routerLink]="isLogin ? '/auth/sign-up' :'/auth/login'"><span class="text-primary">

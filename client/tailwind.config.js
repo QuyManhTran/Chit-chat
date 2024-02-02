@@ -11,7 +11,7 @@ module.exports = {
       colors: {
         primary: "#25D366",
         secondary: "#38d39f",
-        error: "#f44336",
+        danger: "#f44336",
         border: {
           100: "#cec9c1",
         },
@@ -38,6 +38,9 @@ module.exports = {
       },
       transitionTimingFunction: {
         wavy: "cubic-bezier(0.66, 0, 0.34, 1)",
+      },
+      boxShadow: {
+        sd1: "0px 5px 15px rgba(0, 0, 0, 0.2)",
       },
     },
   },

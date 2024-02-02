@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
     selector: 'app-auth-action',
@@ -10,7 +11,13 @@ export class AuthActionComponent {
     @Input() isDisable!: boolean;
     @Output() SubmitEvent: EventEmitter<void> = new EventEmitter<void>();
 
+    constructor(private authService: AuthService) {}
+
     onSubmit = () => {
         this.SubmitEvent.emit();
+    };
+
+    onGoogle = () => {
+        this.authService.GoogleAuth();
     };
 }
