@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RegisterForm } from '@interfaces/auth/login.interface';
+import { IRegisterForm } from '@interfaces/auth/login.interface';
 
 @Component({
     selector: 'app-register',
@@ -8,7 +8,7 @@ import { RegisterForm } from '@interfaces/auth/login.interface';
     styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
-    RegisterForm!: FormGroup<RegisterForm>;
+    RegisterForm!: FormGroup<IRegisterForm>;
     ngOnInit(): void {
         this.RegisterForm = new FormGroup(
             {

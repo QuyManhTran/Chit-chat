@@ -1,7 +1,7 @@
 <div
     class="relative flex flex-col items-center max-w-[380px] bg-white px-6 pb-6 rounded-[25px] shadow-sd1 lg:shadow-none lg:px-0 lg:pb-0 lg:bg-transparent z-10 lg:ml-20">
     <h2 class="text-[54px] mb-12 text-cblack-500 font-bold -tracking-wider">Sign in</h2>
-
+    {{getError$ | async}}
     <form class="w-full flex flex-col {{LoginForm.invalid && LoginForm.touched ? 'gap-8' :'gap-5'}}"
         [formGroup]="LoginForm">
         <div class="relative z-0 w-full flex flex-row items-center gap-6 pb-1">

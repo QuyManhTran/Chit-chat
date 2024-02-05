@@ -6,10 +6,12 @@ import {
     HttpRequest,
     HttpErrorResponse,
     HttpStatusCode,
+    HttpResponse,
 } from '@angular/common/http';
 
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { UserService } from '@services/user/user.service';
+import { IErrorResponse } from '@interfaces/auth/response.interface';
 
 /** Pass untouched request through to the next request handler. */
 @Injectable()
@@ -24,8 +26,13 @@ export class AuthInterceptor implements HttpInterceptor {
                 ) {
                     /* handler auth remove all */
                     this.userService.unAuthHandler();
+                    return of(
+                        new HttpResponse<IErrorResponse>({
+                            body: { error: httpErrorResponse.message },
+                        })
+                    );
                 }
-                return [];
+                return throwError(httpErrorResponse);
             })
         );
         return modifiedResponse;

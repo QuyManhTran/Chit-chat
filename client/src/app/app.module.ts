@@ -7,7 +7,7 @@ import { ENVIRONMENT_CONFIG, ENVIRONMENT_SERVICE_CONFIG } from './configs/tokens
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '@envs/environment.development';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieInterceptor } from '@interceptors/cookie/cookie.interceptor';
 import { RequestTokenInterceptor } from '@interceptors/request-token/request-token.interceptor';
 import { ResponseTokenInterceptor } from '@interceptors/response-token/response-token.interceptor';
@@ -19,6 +19,7 @@ import { AuthInterceptor } from '@interceptors/authorization/auth.interceptor';
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
+        HttpClientModule,
     ],
     providers: [
         { provide: ENVIRONMENT_SERVICE_CONFIG, useValue: ENVIRONMENT_CONFIG },

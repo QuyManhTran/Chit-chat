@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfor } from '@interfaces/chat/user.interface';
+import { IUserInfor } from '@interfaces/chat/user.interface';
 import { AuthService } from '@services/auth/auth.service';
 import { LOCAL_STORAGE_TOKE } from 'src/app/configs/tokens/storage.token';
 
@@ -8,7 +8,7 @@ import { LOCAL_STORAGE_TOKE } from 'src/app/configs/tokens/storage.token';
     providedIn: 'root',
 })
 export class UserService {
-    user!: UserInfor | undefined;
+    user!: IUserInfor | undefined;
     isLogged!: boolean;
     constructor(
         @Inject(LOCAL_STORAGE_TOKE) private storage: Storage,
@@ -20,7 +20,7 @@ export class UserService {
         return this.user;
     }
 
-    set userSetter(_user: UserInfor | undefined) {
+    set userSetter(_user: IUserInfor | undefined) {
         this.user = _user;
     }
 

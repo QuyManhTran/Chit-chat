@@ -1,12 +1,22 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ILoginData } from '@interfaces/auth/login.interface';
+import { IUserInfor } from '@interfaces/chat/user.interface';
+import { ENV } from '@interfaces/environment/environment.interface';
 import { AuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import { Observable } from 'rxjs';
+import { ENVIRONMENT_SERVICE_CONFIG } from 'src/app/configs/tokens/environment.token';
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
     private accessToken: string = '';
-    constructor(private AngularFireAuth: AngularFireAuth) {}
+    constructor(
+        private AngularFireAuth: AngularFireAuth,
+        private http: HttpClient,
+        @Inject(ENVIRONMENT_SERVICE_CONFIG) private env_config: ENV
+    ) {}
 
     /*
         FIREBASE
@@ -47,6 +57,10 @@ export class AuthService {
     get tokenGetter() {
         return this.accessToken;
     }
+
+    loginByPassword$ = (data: ILoginData): Observable<IUserInfor> => {
+        return this.http.post<IUserInfor>(`${this.env_config.host}/auth/login`, data);
+    };
 
     unAuthHandler = () => {
         this.tokenSetter = '';

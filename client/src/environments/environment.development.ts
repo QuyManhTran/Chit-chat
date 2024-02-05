@@ -1,7 +1,7 @@
 import { ENV } from '@interfaces/environment/environment.interface';
 
 export const environment: ENV = {
-    host: 'http://localhost:3000/api/v1',
+    host: 'http://localhost:3000/v1',
     firebaseConfig: {
         apiKey: 'AIzaSyAIBMmPjAG_hyP-7uBtw4prL7FQRZjTJXY',
         authDomain: 'chat-app-273d9.firebaseapp.com',
