@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class AuthActionComponent {
     @Input() isLogin!: boolean;
     @Input() isDisable!: boolean;
+    @Input() isLoading!: boolean;
     @Output() SubmitEvent: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(private authService: AuthService) {}

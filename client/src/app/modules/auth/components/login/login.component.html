@@ -1,7 +1,6 @@
 <div
     class="relative flex flex-col items-center max-w-[380px] bg-white px-6 pb-6 rounded-[25px] shadow-sd1 lg:shadow-none lg:px-0 lg:pb-0 lg:bg-transparent z-10 lg:ml-20">
     <h2 class="text-[54px] mb-12 text-cblack-500 font-bold -tracking-wider">Sign in</h2>
-    {{getError$ | async}}
     <form class="w-full flex flex-col {{LoginForm.invalid && LoginForm.touched ? 'gap-8' :'gap-5'}}"
         [formGroup]="LoginForm">
         <div class="relative z-0 w-full flex flex-row items-center gap-6 pb-1">
@@ -15,10 +14,10 @@
             <label for="email"
                 class="peer-focus:font-medium absolute text-[20px] font-medium duration-300 transform -translate-y-6 scale-[0.6] top-2 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6 {{LoginForm.get('email')?.errors && LoginForm.get('email')?.touched ? 'text-danger':'text-gray-500'}}">Email
                 address</label>
-            <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
+            <div class="absolute bottom-0 left-0 h-[1px] w-full bg-cgrey-400 ">
             </div>
             <div
-                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{LoginForm.get('email')?.errors && LoginForm.get('email')?.touched ? 'bg-error w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
+                class="absolute bottom-0 left-1/2 h-[1px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{LoginForm.get('email')?.errors && LoginForm.get('email')?.touched ? 'bg-danger w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
             </div>
             <div *ngIf="LoginForm.get('email')?.touched" class="absolute -bottom-2 left-0 text-xs text-danger error">
                 <span
@@ -60,10 +59,10 @@
                 </span>
             </label>
 
-            <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
+            <div class="absolute bottom-0 left-0 h-[1px] w-full bg-cgrey-400 ">
             </div>
             <div
-                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{LoginForm.get('password')?.hasError('required') && LoginForm.get('password')?.touched ? 'bg-error w-full -translate-x-1/2' : 'peer-focus:bg-primary'}}">
+                class="absolute bottom-0 left-1/2 h-[1px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{LoginForm.get('password')?.hasError('required') && LoginForm.get('password')?.touched ? 'bg-danger w-full -translate-x-1/2' : 'peer-focus:bg-primary'}}">
             </div>
             <div *ngIf="LoginForm.get('password')?.touched" class="absolute -bottom-2 left-0 text-xs text-danger error">
                 <span *ngIf="LoginForm.get('password')?.hasError('required')">
@@ -72,10 +71,11 @@
             </div>
         </div>
     </form>
+
     <div class="self-start pt-6 flex flex-row w-full justify-between">
         <div class="flex flex-row items-center gap-3">
             <span
-                class="w-5 h-5 bg-transparent border border-cgrey-400 rounded-[50%] flex flex-row justify-center items-center overflow-hidden cursor-default"
+                class="w-5 h-5 bg-transparent border border-cgrey-400 rounded-[50%] flex flex-row justify-center items-center overflow-hidden cursor-default select-none"
                 (click)="onRememberMe()">
                 <span
                     class="material-symbols-outlined text-lg bg-primary w-full text-white {{!isRemember && 'hidden'}}">
@@ -88,6 +88,9 @@
             class="text-sm text-cgrey-500 font-medium hover:cursor-pointer hover:underline hover:decoration-cgrey-500 hover:decoration-1 hover:underline-offset-3">Forgot
             Password?</span>
     </div>
-    <div class="w-full"><app-auth-action [isLogin]="true" [isDisable]="LoginForm.invalid"
-            (SubmitEvent)="onSubmit()"></app-auth-action></div>
+    <div class="w-full">
+        <app-auth-action [isLogin]="true" [isDisable]="LoginForm.invalid" [isLoading]="isLoading"
+            (SubmitEvent)="onSubmit()">
+        </app-auth-action>
+    </div>
 </div>

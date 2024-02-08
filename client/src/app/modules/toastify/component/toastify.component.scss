@@ -1,0 +1,63 @@
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.material-symbols-outlined.close {
+  font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
+}
+.toastify__progress {
+  animation: toastifyProgressAnimation 3s linear 0.4s forwards;
+}
+
+.toastify {
+  animation: toastifyAnimation 3.8s linear forwards;
+}
+
+.toastify--close {
+  animation: toastifyDisapearAnimation 0.4s linear forwards;
+}
+
+@keyframes toastifyProgressAnimation {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes toastifyAnimation {
+  0% {
+    transform: translateY(-300%);
+  }
+  5.2% {
+    transform: translateY(0%);
+  }
+  8.42% {
+    transform: translateY(-40%);
+  }
+  10.5% {
+    transform: translateY(0%);
+  }
+  89.47% {
+    transform: translateY(0%);
+  }
+  94% {
+    transform: translateY(30%);
+  }
+  100% {
+    transform: translateY(-300%);
+  }
+}
+
+@keyframes toastifyDisapearAnimation {
+  0% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(30%);
+  }
+  100% {
+    transform: translateY(-300%);
+  }
+}

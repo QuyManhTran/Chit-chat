@@ -1,0 +1,27 @@
+<div *ngIf="getToastify$|async as toast"
+    class="fixed top-[1em] left-1/2 -translate-x-1/2 text-[40px] z-[2000] p-1 w-[320px]">
+    <div #toastify
+        class="relative bg-white p-2 mb-[1rem] rounded text-toastify min-h-16 flex items-center justify-between shadow-sd2 overflow-hidden toastify">
+        <div class="mx-0 p-[6px] flex items-center">
+            <div class="mr-[10px] w-5 flex items-center">
+                <span
+                    [ngClass]="{'material-symbols-outlined':true, 'text-cgreen-500':toast.status ==='success', 'text-danger':toast.status ==='error', 'text-cyellow-500':toast.status ==='warning'}">
+                    {{toast.status === 'success' ? 'check_circle':'error'}}
+                </span>
+            </div>
+            <span class="text-base font-medium">
+                {{toast.title}}
+            </span>
+        </div>
+        <button type="button" class="self-start flex" (click)="onClose()">
+            <span
+                class="material-symbols-outlined close text-[20px] text-cgrey-100 hover:text-black transition-all duration-300">
+                close
+            </span>
+        </button>
+        <div
+            [ngClass]="{'absolute bottom-0 left-0 w-full h-[5px] origin-left':true,'bg-cgreen-500':toast.status ==='success', 'bg-danger':toast.status ==='error', 'bg-cyellow-500':toast.status ==='warning'}">
+        </div>
+        <div class="absolute bottom-0 right-0 h-[5px] origin-right bg-white toastify__progress"></div>
+    </div>
+</div>

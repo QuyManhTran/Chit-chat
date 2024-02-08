@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, Optional, SkipSelf } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IRegisterForm } from '@interfaces/auth/login.interface';
+import { IRegisterData, IRegisterForm } from '@interfaces/auth/login.interface';
+import { AuthService } from '@services/auth/auth.service';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-register',
@@ -9,6 +12,11 @@ import { IRegisterForm } from '@interfaces/auth/login.interface';
 })
 export class RegisterComponent implements OnInit {
     RegisterForm!: FormGroup<IRegisterForm>;
+    error$: Subject<string> = new Subject<string>();
+    getError$: Observable<string> = this.error$.asObservable();
+    isError!: boolean;
+    isLoading!: boolean;
+    constructor(@SkipSelf() @Optional() private authService: AuthService) {}
     ngOnInit(): void {
         this.RegisterForm = new FormGroup(
             {
@@ -47,6 +55,32 @@ export class RegisterComponent implements OnInit {
     }
 
     onSubmit = () => {
-        console.log(this.RegisterForm.value);
+        this.isLoading = true;
+        if (this.isError) this.error$.next('');
+        const data: IRegisterData = {
+            email: this.RegisterForm.value.email || '',
+            password: this.RegisterForm.value.password || '',
+            name: this.RegisterForm.value.name || '',
+        };
+        this.authService.registerByPassword$(data).subscribe({
+            next: (value) => {
+                console.log(value);
+            },
+            error: (error: HttpErrorResponse) => {
+                this.error$.next(error.error?.message);
+                this.isError = true;
+                this.isLoading = false;
+            },
+            complete: () => {
+                this.isLoading = false;
+            },
+        });
+    };
+
+    onFocus = () => {
+        if (this.isError) {
+            this.isError = false;
+            this.error$.next('');
+        }
     };
 }

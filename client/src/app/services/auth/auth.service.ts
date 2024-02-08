@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ILoginData } from '@interfaces/auth/login.interface';
+import { ILoginData, IRegisterData } from '@interfaces/auth/login.interface';
 import { IUserInfor } from '@interfaces/chat/user.interface';
 import { ENV } from '@interfaces/environment/environment.interface';
 import { AuthProvider, GoogleAuthProvider } from 'firebase/auth';
@@ -60,6 +60,10 @@ export class AuthService {
 
     loginByPassword$ = (data: ILoginData): Observable<IUserInfor> => {
         return this.http.post<IUserInfor>(`${this.env_config.host}/auth/login`, data);
+    };
+
+    registerByPassword$ = (data: IRegisterData): Observable<IUserInfor> => {
+        return this.http.post<IUserInfor>(`${this.env_config.host}/auth/register`, data);
     };
 
     unAuthHandler = () => {

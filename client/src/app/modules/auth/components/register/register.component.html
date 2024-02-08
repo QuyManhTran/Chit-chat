@@ -5,7 +5,7 @@
         [formGroup]="RegisterForm">
 
         <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
-            <input spellcheck="false" type="name" name="name" id="name" formControlName="name"
+            <input spellcheck="false" type="name" name="name" id="name" formControlName="name" (focus)="onFocus()"
                 class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched && 'text-danger'}}"
                 placeholder=" " required />
             <span
@@ -15,10 +15,10 @@
             <label for="name"
                 class="peer-focus:font-medium absolute text-base sm:text-[20px] font-medium duration-300 transform -translate-y-6 scale-[0.6] top-2 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6 {{RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched ? 'text-danger':'text-gray-500'}}">User
                 name</label>
-            <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
+            <div class="absolute bottom-0 left-0 h-[0.5px] w-full bg-cgrey-400 ">
             </div>
             <div
-                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched ? 'bg-error w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
+                class="absolute bottom-0 left-1/2 h-[1px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched ? 'bg-danger w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
             </div>
             <div *ngIf="RegisterForm.get('name')?.touched" class="absolute -bottom-2 left-0 text-xs text-danger error">
                 <span
@@ -32,7 +32,7 @@
         </div>
 
         <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
-            <input spellcheck="false" type="email" name="email" id="email" formControlName="email"
+            <input spellcheck="false" type="email" name="email" id="email" formControlName="email" (focus)="onFocus()"
                 class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{RegisterForm.get('email')?.errors && RegisterForm.get('email')?.touched && 'text-danger'}}"
                 placeholder=" " required />
             <span
@@ -42,10 +42,10 @@
             <label for="email"
                 class="peer-focus:font-medium absolute text-base sm:text-[20px] font-medium duration-300 transform -translate-y-6 scale-[0.6] top-2 left-12 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-[0.6] peer-focus:-translate-y-6 {{(RegisterForm.get('email')?.errors && RegisterForm.get('email')?.touched) ? 'text-danger':'text-gray-500'}}">Email
                 address</label>
-            <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
+            <div class="absolute bottom-0 left-0 h-[1px] w-full bg-cgrey-400 ">
             </div>
             <div
-                class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{RegisterForm.get('email')?.errors && RegisterForm.get('email')?.touched ? 'bg-error w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
+                class="absolute bottom-0 left-1/2 h-[1px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{RegisterForm.get('email')?.errors && RegisterForm.get('email')?.touched ? 'bg-danger w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
             </div>
             <div *ngIf="RegisterForm.get('email')?.touched" class="absolute -bottom-2 left-0 text-xs text-danger error">
                 <span
@@ -60,6 +60,7 @@
         <div class="flex flex-col sm:flex-row sm:gap-3 gap-6">
             <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
                 <input spellcheck="false" type="password" name="password" id="password" formControlName="password"
+                    (focus)="onFocus()"
                     class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched && 'text-danger'}}"
                     placeholder=" " required />
                 <span
@@ -71,10 +72,10 @@
                     Password
                 </label>
 
-                <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
+                <div class="absolute bottom-0 left-0 h-[1px] w-full bg-cgrey-400 ">
                 </div>
                 <div
-                    class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched ? 'bg-error w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
+                    class="absolute bottom-0 left-1/2 h-[1px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched ? 'bg-danger w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
                 </div>
                 <div *ngIf="RegisterForm.get('password')?.touched"
                     class="absolute top-[90%] left-0 text-xs leading-[12px] text-danger error">
@@ -90,7 +91,7 @@
 
             <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
                 <input spellcheck="false" type="password" name="confirmPassword" id="confirmPassword"
-                    formControlName="confirmPassword"
+                    (focus)="onFocus()" formControlName="confirmPassword"
                     class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{(RegisterForm.get('confirmPassword')?.errors || RegisterForm.errors?.['mismatch']) && RegisterForm.get('confirmPassword')?.touched && 'text-danger'}}"
                     placeholder=" " required />
                 <span
@@ -102,10 +103,10 @@
                     Confirm password
                 </label>
 
-                <div class="absolute bottom-0 left-0 h-[1.5px] w-full bg-cgrey-400 ">
+                <div class="absolute bottom-0 left-0 h-[1px] w-full bg-cgrey-400 ">
                 </div>
                 <div
-                    class="absolute bottom-0 left-1/2 h-[1.5px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{(RegisterForm.get('confirmPassword')?.errors || RegisterForm.errors?.['mismatch']) && RegisterForm.get('confirmPassword')?.touched ? 'bg-error w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
+                    class="absolute bottom-0 left-1/2 h-[1px] w-0 duration-300 ease-linear bg-cgrey-400 peer-focus:w-full peer-focus:-translate-x-1/2 {{(RegisterForm.get('confirmPassword')?.errors || RegisterForm.errors?.['mismatch']) && RegisterForm.get('confirmPassword')?.touched ? 'bg-danger w-full -translate-x-1/2' :'peer-focus:bg-primary'}}">
                 </div>
 
                 <div *ngIf="RegisterForm.get('confirmPassword')?.touched"
@@ -122,8 +123,14 @@
             </div>
         </div>
     </form>
+    <div *ngIf="getError$" class="text-xs text-danger error text-center">
+        <span>
+            {{getError$ | async}}
+        </span>
+    </div>
     <div class="w-full">
-        <app-auth-action [isLogin]="false" [isDisable]="RegisterForm.invalid" (SubmitEvent)="onSubmit()">
+        <app-auth-action [isLogin]="false" [isDisable]="RegisterForm.invalid" (SubmitEvent)="onSubmit()"
+            [isLoading]="isLoading">
         </app-auth-action>
     </div>
 </div>

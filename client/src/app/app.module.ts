@@ -12,6 +12,7 @@ import { CookieInterceptor } from '@interceptors/cookie/cookie.interceptor';
 import { RequestTokenInterceptor } from '@interceptors/request-token/request-token.interceptor';
 import { ResponseTokenInterceptor } from '@interceptors/response-token/response-token.interceptor';
 import { AuthInterceptor } from '@interceptors/authorization/auth.interceptor';
+import { ToastifyModule } from '@modules/toastify/toastify.module';
 @NgModule({
     declarations: [AppComponent, NotFoundComponent],
     imports: [
@@ -20,6 +21,7 @@ import { AuthInterceptor } from '@interceptors/authorization/auth.interceptor';
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
         HttpClientModule,
+        ToastifyModule,
     ],
     providers: [
         { provide: ENVIRONMENT_SERVICE_CONFIG, useValue: ENVIRONMENT_CONFIG },
