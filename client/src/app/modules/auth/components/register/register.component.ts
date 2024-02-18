@@ -2,8 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Optional, SkipSelf } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IRegisterData, IRegisterForm } from '@interfaces/auth/login.interface';
+import { ToastStatus } from '@interfaces/toastify/toastify.interface';
 import { AuthService } from '@services/auth/auth.service';
-import { Observable, Subject } from 'rxjs';
+import { ToastifyService } from '@services/toastify/toastify.service';
+import { UserService } from '@services/user/user.service';
 
 @Component({
     selector: 'app-register',
@@ -12,11 +14,12 @@ import { Observable, Subject } from 'rxjs';
 })
 export class RegisterComponent implements OnInit {
     RegisterForm!: FormGroup<IRegisterForm>;
-    error$: Subject<string> = new Subject<string>();
-    getError$: Observable<string> = this.error$.asObservable();
-    isError!: boolean;
     isLoading!: boolean;
-    constructor(@SkipSelf() @Optional() private authService: AuthService) {}
+    constructor(
+        @SkipSelf() @Optional() private authService: AuthService,
+        @SkipSelf() @Optional() private userService: UserService,
+        @SkipSelf() @Optional() private toastifyService: ToastifyService
+    ) {}
     ngOnInit(): void {
         this.RegisterForm = new FormGroup(
             {
@@ -56,7 +59,6 @@ export class RegisterComponent implements OnInit {
 
     onSubmit = () => {
         this.isLoading = true;
-        if (this.isError) this.error$.next('');
         const data: IRegisterData = {
             email: this.RegisterForm.value.email || '',
             password: this.RegisterForm.value.password || '',
@@ -65,22 +67,23 @@ export class RegisterComponent implements OnInit {
         this.authService.registerByPassword$(data).subscribe({
             next: (value) => {
                 console.log(value);
+                this.userService.userSetter = value;
+                this.toastifyService.alert({
+                    status: ToastStatus.SUCCESS,
+                    title: 'Sign up successfully !',
+                    isClose: true,
+                });
             },
             error: (error: HttpErrorResponse) => {
-                this.error$.next(error.error?.message);
-                this.isError = true;
                 this.isLoading = false;
+                this.toastifyService.alert({
+                    status: ToastStatus.ERROR,
+                    title: error.error?.message || 'Something went wrong !',
+                });
             },
             complete: () => {
                 this.isLoading = false;
             },
         });
-    };
-
-    onFocus = () => {
-        if (this.isError) {
-            this.isError = false;
-            this.error$.next('');
-        }
     };
 }

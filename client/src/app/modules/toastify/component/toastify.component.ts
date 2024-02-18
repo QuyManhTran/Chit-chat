@@ -1,12 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    OnInit,
-    Optional,
-    SkipSelf,
-    ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, Optional, SkipSelf, ViewChild } from '@angular/core';
 import { IToastTify } from '@interfaces/toastify/toastify.interface';
 import { ToastifyService } from '@services/toastify/toastify.service';
 import { Observable } from 'rxjs';
@@ -16,16 +8,13 @@ import { Observable } from 'rxjs';
     templateUrl: './toastify.component.html',
     styleUrl: './toastify.component.scss',
 })
-export class ToastifyComponent implements OnInit, AfterViewInit {
+export class ToastifyComponent implements OnInit {
     getToastify$!: Observable<IToastTify | undefined>;
     @ViewChild('toastify') toastifyRef!: ElementRef<HTMLDivElement>;
     constructor(@SkipSelf() @Optional() private toastifyService: ToastifyService) {}
 
     ngOnInit(): void {
         this.getToastify$ = this.toastifyService.getToast$;
-    }
-    ngAfterViewInit(): void {
-        console.log(this.toastifyRef);
     }
 
     onClose = () => {

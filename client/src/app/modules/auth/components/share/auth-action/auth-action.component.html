@@ -19,11 +19,12 @@
             <span class="text-cblack-500 text-xl font-semibold">Google</span>
         </button>
 
-        <button
+        <button type="button" (click)="onFacebook()"
             class="h-[50px] flex items-center justify-center gap-2 border border-solid border-cgrey-200 rounded-[25px] from-white via-cgrey-200 to-white transition-all ease-linear duration-[0.5s] bg-[size:200%] bg-gradient-to-r hover:bg-right">
             <img src="./assets/images/auth-page/facebook-icon.svg" alt="facebook-icon" class="w-[26px] h-[26px]">
             <span class="text-cblack-500 text-xl font-semibold">Facebook</span>
         </button>
+
     </div>
     <div class="text-sm font-medium text-cgrey-500 {{isLogin ? 'mt-4':'mt-0'}} text-center">
         <span *ngIf="isLogin">Don't have an account? </span>

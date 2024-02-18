@@ -5,6 +5,7 @@ import { ILoginData, ILoginForm } from '@interfaces/auth/login.interface';
 import { ToastStatus } from '@interfaces/toastify/toastify.interface';
 import { AuthService } from '@services/auth/auth.service';
 import { ToastifyService } from '@services/toastify/toastify.service';
+import { UserService } from '@services/user/user.service';
 import { Observable, Subject } from 'rxjs';
 
 @Component({
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     isLoading!: boolean;
     constructor(
         @SkipSelf() @Optional() private authService: AuthService,
-        private toastifyService: ToastifyService
+        @SkipSelf() @Optional() private userService: UserService,
+        @SkipSelf() @Optional() private toastifyService: ToastifyService
     ) {}
 
     ngOnInit(): void {
@@ -49,6 +51,7 @@ export class LoginComponent implements OnInit {
         this.authService.loginByPassword$(data).subscribe({
             next: (value) => {
                 console.log(value);
+                this.userService.userSetter = value;
                 this.toastifyService.alert({
                     status: ToastStatus.SUCCESS,
                     title: 'Login successfully!',

@@ -18,3 +18,10 @@ export interface IRegisterByPassword {
     email: string;
     password: string;
 }
+
+export interface IFireBase {
+    isNewUser: boolean;
+    name: string;
+    email: string;
+    password: string;
+}

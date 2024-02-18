@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ILoginData, IRegisterData } from '@interfaces/auth/login.interface';
+import { IFireBaseData, ILoginData, IRegisterData } from '@interfaces/auth/login.interface';
 import { IUserInfor } from '@interfaces/chat/user.interface';
 import { ENV } from '@interfaces/environment/environment.interface';
-import { AuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import { UserService } from '@services/user/user.service';
+import { Auth, AuthProvider, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import { Observable } from 'rxjs';
 import { ENVIRONMENT_SERVICE_CONFIG } from 'src/app/configs/tokens/environment.token';
 @Injectable({
@@ -15,6 +16,7 @@ export class AuthService {
     constructor(
         private AngularFireAuth: AngularFireAuth,
         private http: HttpClient,
+        private userService: UserService,
         @Inject(ENVIRONMENT_SERVICE_CONFIG) private env_config: ENV
     ) {}
 
@@ -28,10 +30,31 @@ export class AuthService {
         this.AuthLogin(provider);
     };
 
+    FacebookAuth = () => {
+        const provider: AuthProvider = new FacebookAuthProvider().setCustomParameters({
+            prompt: 'select_account',
+        });
+        this.AuthLogin(provider);
+    };
+
     AuthLogin = (provider: AuthProvider) => {
         this.AngularFireAuth.signInWithPopup(provider)
             .then((value) => {
-                console.log(value);
+                const data: IFireBaseData = {
+                    isNewUser: value.additionalUserInfo?.isNewUser || false,
+                    email: value.user?.email || '',
+                    name: value.user?.displayName || '',
+                    password: value.user?.uid || '',
+                };
+                this.authByFireBase$(data).subscribe({
+                    next: (value) => {
+                        console.log(value);
+                        this.userService.userSetter = value;
+                    },
+                    error: (error: HttpErrorResponse) => {
+                        console.log(error.error?.message);
+                    },
+                });
             })
             .catch((error) => {
                 console.log(error);
@@ -51,6 +74,7 @@ export class AuthService {
     /* AUTH HANDLE */
 
     set tokenSetter(_accessToken: string) {
+        console.log(_accessToken);
         this.accessToken = _accessToken;
     }
 
@@ -64,6 +88,10 @@ export class AuthService {
 
     registerByPassword$ = (data: IRegisterData): Observable<IUserInfor> => {
         return this.http.post<IUserInfor>(`${this.env_config.host}/auth/register`, data);
+    };
+
+    authByFireBase$ = (data: IFireBaseData): Observable<IUserInfor> => {
+        return this.http.post<IUserInfor>(`${this.env_config.host}/auth/firebase`, data);
     };
 
     unAuthHandler = () => {

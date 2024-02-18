@@ -5,7 +5,7 @@
         [formGroup]="RegisterForm">
 
         <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
-            <input spellcheck="false" type="name" name="name" id="name" formControlName="name" (focus)="onFocus()"
+            <input spellcheck="false" type="name" name="name" id="name" formControlName="name"
                 class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched && 'text-danger'}}"
                 placeholder=" " required />
             <span
@@ -32,7 +32,7 @@
         </div>
 
         <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
-            <input spellcheck="false" type="email" name="email" id="email" formControlName="email" (focus)="onFocus()"
+            <input spellcheck="false" type="email" name="email" id="email" formControlName="email"
                 class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{RegisterForm.get('email')?.errors && RegisterForm.get('email')?.touched && 'text-danger'}}"
                 placeholder=" " required />
             <span
@@ -60,7 +60,6 @@
         <div class="flex flex-col sm:flex-row sm:gap-3 gap-6">
             <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
                 <input spellcheck="false" type="password" name="password" id="password" formControlName="password"
-                    (focus)="onFocus()"
                     class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched && 'text-danger'}}"
                     placeholder=" " required />
                 <span
@@ -91,7 +90,7 @@
 
             <div class="relative z-0 w-full flex flex-row items-center gap-5 pb-1">
                 <input spellcheck="false" type="password" name="confirmPassword" id="confirmPassword"
-                    (focus)="onFocus()" formControlName="confirmPassword"
+                    formControlName="confirmPassword"
                     class="order-2 block py-2 px-0 w-full text-lg font-medium text-cblack-500 bg-transparent appearance-none focus:outline-none focus:ring-0 peer {{(RegisterForm.get('confirmPassword')?.errors || RegisterForm.errors?.['mismatch']) && RegisterForm.get('confirmPassword')?.touched && 'text-danger'}}"
                     placeholder=" " required />
                 <span
@@ -123,11 +122,7 @@
             </div>
         </div>
     </form>
-    <div *ngIf="getError$" class="text-xs text-danger error text-center">
-        <span>
-            {{getError$ | async}}
-        </span>
-    </div>
+
     <div class="w-full">
         <app-auth-action [isLogin]="false" [isDisable]="RegisterForm.invalid" (SubmitEvent)="onSubmit()"
             [isLoading]="isLoading">

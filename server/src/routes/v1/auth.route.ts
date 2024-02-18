@@ -5,5 +5,6 @@ const authRouter: Router = Router();
 
 authRouter.post('/login', AuthController.login);
 authRouter.post('/register', AuthController.register);
+authRouter.post('/firebase', AuthController.firebase);
 
 export default authRouter;

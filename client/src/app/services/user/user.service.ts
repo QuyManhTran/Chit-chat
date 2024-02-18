@@ -1,20 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { IUserInfor } from '@interfaces/chat/user.interface';
-import { AuthService } from '@services/auth/auth.service';
 import { LOCAL_STORAGE_TOKE } from 'src/app/configs/tokens/storage.token';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UserService {
-    user!: IUserInfor | undefined;
+    private user!: IUserInfor | undefined;
     isLogged!: boolean;
-    constructor(
-        @Inject(LOCAL_STORAGE_TOKE) private storage: Storage,
-        private router: Router,
-        private authSevice: AuthService
-    ) {}
+    constructor(@Inject(LOCAL_STORAGE_TOKE) private storage: Storage, private router: Router) {}
 
     get userGetter() {
         return this.user;
@@ -22,6 +17,8 @@ export class UserService {
 
     set userSetter(_user: IUserInfor | undefined) {
         this.user = _user;
+        this.isLogged = true;
+        this.storage.setItem('user', JSON.stringify({ isLogged: this.isLogged }));
     }
 
     initUser = (): void => {
@@ -31,7 +28,6 @@ export class UserService {
             return;
         }
         if (storageUser !== null) {
-            this.userSetter = JSON.parse(storageUser);
             this.isLogged = true;
         }
     };
@@ -40,7 +36,6 @@ export class UserService {
         this.isLogged = false;
         this.userSetter = undefined;
         this.storage.removeItem('user');
-        this.authSevice.unAuthHandler();
         this.router.navigate(['/auth/login']);
     };
 }

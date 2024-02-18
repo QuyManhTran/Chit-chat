@@ -21,4 +21,8 @@ export class AuthActionComponent {
     onGoogle = () => {
         this.authService.GoogleAuth();
     };
+
+    onFacebook = () => {
+        this.authService.FacebookAuth();
+    };
 }
