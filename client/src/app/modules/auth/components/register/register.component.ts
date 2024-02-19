@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Optional, SkipSelf } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IRegisterData, IRegisterForm } from '@interfaces/auth/login.interface';
 import { ToastStatus } from '@interfaces/toastify/toastify.interface';
 import { AuthService } from '@services/auth/auth.service';
@@ -18,7 +19,8 @@ export class RegisterComponent implements OnInit {
     constructor(
         @SkipSelf() @Optional() private authService: AuthService,
         @SkipSelf() @Optional() private userService: UserService,
-        @SkipSelf() @Optional() private toastifyService: ToastifyService
+        @SkipSelf() @Optional() private toastifyService: ToastifyService,
+        private router: Router
     ) {}
     ngOnInit(): void {
         this.RegisterForm = new FormGroup(
@@ -83,6 +85,7 @@ export class RegisterComponent implements OnInit {
             },
             complete: () => {
                 this.isLoading = false;
+                this.router.navigate(['/chat']);
             },
         });
     };

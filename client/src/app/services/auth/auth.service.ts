@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 import { IFireBaseData, ILoginData, IRegisterData } from '@interfaces/auth/login.interface';
 import { IUserInfor } from '@interfaces/chat/user.interface';
 import { ENV } from '@interfaces/environment/environment.interface';
@@ -17,6 +18,7 @@ export class AuthService {
         private AngularFireAuth: AngularFireAuth,
         private http: HttpClient,
         private userService: UserService,
+        private router: Router,
         @Inject(ENVIRONMENT_SERVICE_CONFIG) private env_config: ENV
     ) {}
 
@@ -54,6 +56,9 @@ export class AuthService {
                     error: (error: HttpErrorResponse) => {
                         console.log(error.error?.message);
                     },
+                    complete: () => {
+                        this.router.navigate(['/chat']);
+                    },
                 });
             })
             .catch((error) => {
@@ -74,7 +79,6 @@ export class AuthService {
     /* AUTH HANDLE */
 
     set tokenSetter(_accessToken: string) {
-        console.log(_accessToken);
         this.accessToken = _accessToken;
     }
 

@@ -6,6 +6,9 @@ import validator from 'validator';
 import { genHashPassword } from '@configs/password.config';
 import { Request, Response } from '@customes/auth.type';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import envConfig from '@configs/env.config';
+import { TokenModel } from '@models/base/token.base';
 export default class AuthController {
     /**
      *
@@ -28,6 +31,7 @@ export default class AuthController {
             };
             const accessToken: string = genAccessToken(payload);
             const refreshToken: string = genRefreshToken(payload);
+            await this.newRefreshToken(res, refreshToken, payload);
             res.cookie('jwt', refreshToken, withAge(TTL.ONE_DAY)).status(200).json({
                 data: payload,
                 accessToken: accessToken,
@@ -67,6 +71,7 @@ export default class AuthController {
             };
             const accessToken = genAccessToken(payload);
             const refreshToken = genRefreshToken(payload);
+            await this.newRefreshToken(res, refreshToken, payload);
             res.cookie('jwt', refreshToken, withAge(TTL.ONE_DAY)).status(200).json({
                 data: payload,
                 accessToken: accessToken,
@@ -76,6 +81,13 @@ export default class AuthController {
             res.status(500).json({ message: 'Something went wrong!' });
         }
     };
+
+    /**
+     *
+     * @param req Request
+     * @param res Response
+     * @returns user infor or error
+     */
 
     static firebase = async (req: Request, res: Response) => {
         const data = <IFireBase>req.body;
@@ -99,6 +111,7 @@ export default class AuthController {
                 };
                 const accessToken = genAccessToken(payload);
                 const refreshToken = genRefreshToken(payload);
+                await this.newRefreshToken(res, refreshToken, payload);
                 return res.cookie('jwt', refreshToken, withAge(TTL.ONE_DAY)).status(200).json({
                     data: payload,
                     accessToken: accessToken,
@@ -115,6 +128,7 @@ export default class AuthController {
             };
             const accessToken = genAccessToken(payload);
             const refreshToken = genRefreshToken(payload);
+            await this.newRefreshToken(res, refreshToken, payload);
             res.cookie('jwt', refreshToken, withAge(TTL.ONE_DAY)).status(200).json({
                 data: payload,
                 accessToken: accessToken,
@@ -123,5 +137,41 @@ export default class AuthController {
             console.log(error);
             res.status(500).json({ message: 'Something went wrong!' });
         }
+    };
+
+    static loginByRefreshToken = async (req: Request, res: Response) => {
+        const cookies = req.cookies;
+        if (!cookies?.jwt) return res.sendStatus(401);
+        const refreshToken = cookies.jwt as string;
+        jwt.verify(refreshToken, envConfig.REFRESH_SECRET_TOKEN, async (error, decoded) => {
+            if (error && error.name !== 'TokenExpiredError') return res.sendStatus(403);
+            if (error && error.name === 'TokenExpiredError') {
+                await TokenModel.findOneAndDelete({ token: refreshToken });
+                return res.sendStatus(401);
+            }
+            console.log('decoded', decoded);
+            try {
+                const token = await TokenModel.findOne({
+                    token: refreshToken,
+                });
+                if (!token) return res.sendStatus(403);
+                const user = await UserModel.findById(token.userId);
+                if (!user) return res.sendStatus(403);
+                const payload: IUserPayload = {
+                    _id: user._id,
+                    email: user.email,
+                    name: user.name,
+                };
+                const accessToken: string = genAccessToken(payload);
+                res.status(200).json({ data: payload, accessToken: accessToken });
+            } catch (error) {
+                res.status(500).json({ message: 'Something went wrong !' });
+            }
+        });
+    };
+
+    static newRefreshToken = async (res: Response, token: string, user: IUserPayload) => {
+        await TokenModel.findOneAndDelete({ userId: user._id });
+        await TokenModel.create({ userId: user._id, token: token });
     };
 }
