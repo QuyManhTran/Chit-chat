@@ -48,6 +48,7 @@ input:-webkit-autofill {
 ::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 99px;
+  height: 20px;
 }
 
 .sidebar:hover::-webkit-scrollbar-thumb {

@@ -32,6 +32,7 @@ module.exports = {
           600: "#6B7C85",
         },
         cyellow: {
+          200: "#f0ebe3",
           400: "#FFEBCF",
           500: "#f1c40f",
         },
@@ -39,7 +40,11 @@ module.exports = {
           500: "#F0F4F9",
         },
         cgreen: {
+          200: "#D9FDD3",
           500: "#07bc0c",
+        },
+        cblue: {
+          500: "#003BD2",
         },
       },
       transformOrigin: {

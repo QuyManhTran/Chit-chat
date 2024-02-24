@@ -1,3 +1,8 @@
-<div class="pt-3 pb-4 flex flex-col">
-
+<div #sidebar class="pt-3 pb-4 flex flex-col gap-3" *ngIf="previewChats$ | async as previewChats">
+    @for (previewChat of previewChats; track $index) {
+    <app-preview-chat [isReaded]="previewChat.isReaded" [latestMessage]="previewChat.latestMessage"
+        [chatId]="previewChat._id" [name]="previewChat.name" [isActive]="previewChat._id === activeChat"
+        (activeChatEmiter)="onActiveConversation($event)">
+    </app-preview-chat>
+    }
 </div>
