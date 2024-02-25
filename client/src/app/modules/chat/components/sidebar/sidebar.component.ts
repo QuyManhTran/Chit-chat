@@ -29,9 +29,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
             createAt: new Date(),
             updatedAt: new Date(),
             isReaded: true,
-            latestMessage: 'Do you love me?',
+            latestMsg: {
+                content: 'Do you love me?',
+                date: new Date(),
+            },
             name: 'Crush',
-            latestDate: new Date(),
         },
         {
             _id: '2',
@@ -41,9 +43,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
             createAt: new Date(),
             updatedAt: new Date(),
             isReaded: false,
-            latestMessage: `Don't you love me?`,
+            latestMsg: {
+                content: "Don't you love me?",
+                date: new Date(),
+            },
             name: 'Em iu',
-            latestDate: new Date(),
         },
     ];
     constructor(@SkipSelf() @Optional() private chatService: ChatService) {}

@@ -19,10 +19,12 @@ export interface IConversation {
     name: string;
     members: string[];
     callerId: string;
-    latestMessage: string;
+    latestMsg: {
+        content: string;
+        date: Date;
+    };
     isReaded: boolean;
     createAt: Date;
     updatedAt: Date;
-    latestDate: Date;
     __v: number;
 }

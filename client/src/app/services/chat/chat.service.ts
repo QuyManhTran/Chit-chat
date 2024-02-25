@@ -79,8 +79,10 @@ export class ChatService {
         );
         newPreviewChats.unshift({
             ..._conversation,
-            latestMessage: _message.content,
-            latestDate: _message.createdAt,
+            latestMsg: {
+                content: _message.content,
+                date: _message.createdAt,
+            },
             isReaded: this.activeConversation === _conversation._id || userId === _message.senderId,
         });
         this.previewChatsSetter = newPreviewChats;
