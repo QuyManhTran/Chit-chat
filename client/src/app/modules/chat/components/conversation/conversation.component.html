@@ -7,18 +7,26 @@
             <span class="text-lg tracking-tighter font-medium">Daniel Kalio</span>
         </div>
         <div class="flex flex-row gap-10 items-center">
-            <span class="material-symbols-outlined fill hover:opacity-70 cursor-pointer" title="audio call">
-                call
-            </span>
-            <span class="material-symbols-outlined fill hover:opacity-70 cursor-pointer" title="video call">
-                videocam
-            </span>
-            <span class="material-symbols-outlined fill hover:opacity-70 cursor-pointer" title="search message">
-                search
-            </span>
-            <span class="material-symbols-outlined fill hover:opacity-70 cursor-pointer" title="information">
-                info
-            </span>
+            <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
+                <span class="material-symbols-outlined fill select-none" title="audio call">
+                    call
+                </span>
+            </div>
+            <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
+                <span class="material-symbols-outlined fill select-none" title="video call">
+                    videocam
+                </span>
+            </div>
+            <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
+                <span class="material-symbols-outlined fill select-none" title="search message">
+                    search
+                </span>
+            </div>
+            <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
+                <span class="material-symbols-outlined fill select-none" title="information">
+                    info
+                </span>
+            </div>
         </div>
     </div>
     <div class="flex-grow flex flex-col overflow-hidden">
@@ -30,23 +38,23 @@
         </div>
         <div class="flex flex-row w-full items-center gap-6 py-[10px] px-5 bg-cgrey-50 text-cgrey-600">
             <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
-                <span class="material-symbols-outlined select-none">
+                <span class="material-symbols-outlined select-none" title="emoji">
                     sentiment_satisfied
                 </span>
             </div>
             <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
-                <span class="material-symbols-outlined rotate-[45deg] select-none">
+                <span class="material-symbols-outlined rotate-[45deg] select-none" title="file">
                     attach_file
                 </span>
             </div>
             <div class="flex-grow flex flex-row items-center gap-6 px-6 py-2 bg-white rounded-[10px]">
                 <div
                     class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
-                    <span class="material-symbols-outlined fill select-none">
+                    <span class="material-symbols-outlined fill select-none" title="photo">
                         photo_camera
                     </span>
                 </div>
-                <input [formControl]="messageForm"
+                <input [formControl]="messageForm" (keyup.enter)="onEnterKeyup()"
                     class="flex-grow text-lg font-medium tracking-tighter bg-transparent outline-none"
                     spellcheck="false" placeholder="Type a message">
                 <div class="flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-200 px-1 py-1"
@@ -58,7 +66,7 @@
                 </div>
             </div>
             <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
-                <span class="material-symbols-outlined fill select-none">
+                <span class="material-symbols-outlined fill select-none" title="voice">
                     mic
                 </span>
             </div>

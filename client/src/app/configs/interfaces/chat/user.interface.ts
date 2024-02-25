@@ -23,5 +23,6 @@ export interface IConversation {
     isReaded: boolean;
     createAt: Date;
     updatedAt: Date;
+    latestDate: Date;
     __v: number;
 }

@@ -31,6 +31,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
             isReaded: true,
             latestMessage: 'Do you love me?',
             name: 'Crush',
+            latestDate: new Date(),
         },
         {
             _id: '2',
@@ -42,6 +43,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
             isReaded: false,
             latestMessage: `Don't you love me?`,
             name: 'Em iu',
+            latestDate: new Date(),
         },
     ];
     constructor(@SkipSelf() @Optional() private chatService: ChatService) {}
@@ -53,11 +55,13 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         Promise.resolve().then(() => {
             this.chatService.previewChatsSubGetter$.next(this.mockData);
+            this.chatService.previewChatsSetter = this.mockData;
         });
     }
 
     onActiveConversation = (chatId: string) => {
         this.chatService.activeConversatonSetter = chatId;
         this.activeChat = chatId;
+        this.chatService.updateIsReadedMessage(chatId);
     };
 }
