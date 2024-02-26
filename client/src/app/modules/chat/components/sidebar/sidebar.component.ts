@@ -1,66 +1,45 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    OnInit,
-    Optional,
-    SkipSelf,
-    ViewChild,
-} from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit, Optional, SkipSelf } from '@angular/core';
+import { Router } from '@angular/router';
 import { IConversation } from '@interfaces/chat/user.interface';
 import { ChatService } from '@services/chat/chat.service';
-import { Observable } from 'rxjs';
+import { UserService } from '@services/user/user.service';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent implements OnInit, AfterViewInit {
-    @ViewChild('sidebar') sidebarRef!: ElementRef<HTMLDivElement>;
+export class SidebarComponent implements OnInit, OnDestroy {
     activeChat!: string;
     previewChats$: Observable<IConversation[]> = this.chatService.previewChatsGetter$;
-    mockData: IConversation[] = [
-        {
-            _id: '1',
-            __v: 0,
-            callerId: '123456789',
-            members: [],
-            createAt: new Date(),
-            updatedAt: new Date(),
-            isReaded: true,
-            latestMsg: {
-                content: 'Do you love me?',
-                date: new Date(),
-            },
-            name: 'Crush',
-        },
-        {
-            _id: '2',
-            __v: 0,
-            callerId: '987654321',
-            members: [],
-            createAt: new Date(),
-            updatedAt: new Date(),
-            isReaded: false,
-            latestMsg: {
-                content: "Don't you love me?",
-                date: new Date(),
-            },
-            name: 'Em iu',
-        },
-    ];
-    constructor(@SkipSelf() @Optional() private chatService: ChatService) {}
+    destroy$: Subject<void> = new Subject<void>();
+
+    constructor(
+        @SkipSelf() @Optional() private chatService: ChatService,
+        @SkipSelf() @Optional() private userService: UserService,
+        private router: Router
+    ) {}
 
     ngOnInit(): void {
-        this.activeChat = this.chatService.activeConversationGetter;
+        this.chatService
+            .getPreviewChats$(this.userService.userGetter?._id || 'unknown')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (value) => {
+                    this.chatService.previewChatsSubGetter$.next(value);
+                    this.chatService.previewChatsSetter = value;
+                },
+                error: (error: HttpErrorResponse) => {
+                    console.log(error.error?.message);
+                },
+            });
     }
 
-    ngAfterViewInit(): void {
-        Promise.resolve().then(() => {
-            this.chatService.previewChatsSubGetter$.next(this.mockData);
-            this.chatService.previewChatsSetter = this.mockData;
-        });
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     onActiveConversation = (chatId: string) => {

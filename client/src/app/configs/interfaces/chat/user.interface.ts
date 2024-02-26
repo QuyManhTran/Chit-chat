@@ -14,13 +14,20 @@ export interface IMessage {
     __v: number;
 }
 
+export interface INewMessage {
+    chatId: string;
+    senderId: string;
+    content: string;
+}
+
 export interface IConversation {
     _id: string;
     name: string;
     members: string[];
     callerId: string;
-    latestMsg: {
+    latestMsg?: {
         content: string;
+        senderId: string;
         date: Date;
     };
     isReaded: boolean;

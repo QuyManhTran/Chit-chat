@@ -8,7 +8,7 @@
         class="flex-grow flex flex-col justify-between  pb-3 border-b border-b-cgrey-50 select-none {{isReaded ? 'text-cgrey-600':'text-cblack-500'}}">
         <div class="flex flex-row justify-between items-center tracking-tighter">
             <span class="text-lg font-semibold">{{name}}</span>
-            <span class="text-sm font-semibold">{{date|date:'h:mm aaaaa\'m\''}}</span>
+            <span *ngIf="date" class="text-sm font-semibold">{{date|date:'h:mm aaaaa\'m\''}}</span>
         </div>
         <div class="flex flex-row justify-between items-center tracking-tighter">
             <span class="text-base font-medium line-clamp-1">{{latestMessage}}</span>

@@ -1,9 +1,18 @@
-import { ChangeDetectionStrategy, Component, OnInit, Optional, SkipSelf } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnDestroy,
+    OnInit,
+    Optional,
+    SkipSelf,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IMessage } from '@interfaces/chat/user.interface';
+import { IMessage, INewMessage } from '@interfaces/chat/user.interface';
 import { ChatService } from '@services/chat/chat.service';
 import { UserService } from '@services/user/user.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'app-conversation',
@@ -11,9 +20,10 @@ import { UserService } from '@services/user/user.service';
     styleUrl: './conversation.component.scss',
     changeDetection: ChangeDetectionStrategy.Default,
 })
-export class ConversationComponent implements OnInit {
+export class ConversationComponent implements OnInit, OnDestroy {
     messages!: IMessage[];
     messageForm!: FormControl<string | null>;
+    destroy$: Subject<void> = new Subject<void>();
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -30,7 +40,34 @@ export class ConversationComponent implements OnInit {
 
     ngOnInit(): void {}
 
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
     sendMessageHandler = (): void => {
+        const message: INewMessage = {
+            chatId: this.activatedRoute.snapshot.params?.['chatId'],
+            senderId: this.userService.userGetter?._id || '123456789',
+            content: this.messageForm.value || '',
+        };
+        this.chatService
+            .postNewMessage$(message)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (value) => {
+                    console.log(value);
+                },
+                error: (error: HttpErrorResponse) => {
+                    console.log(error.error?.message);
+                },
+                complete: () => {
+                    this.sucessfulMessageHandler();
+                },
+            });
+    };
+
+    sucessfulMessageHandler = (): void => {
         const newMessage: IMessage = {
             __v: 0,
             _id: '123',

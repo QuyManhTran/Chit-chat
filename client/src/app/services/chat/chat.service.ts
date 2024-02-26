@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
-import { IConversation, IMessage } from '@interfaces/chat/user.interface';
-import { UserService } from '@services/user/user.service';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { IConversation, IMessage, INewMessage } from '@interfaces/chat/user.interface';
+import { ENV } from '@interfaces/environment/environment.interface';
 import { Observable, Subject } from 'rxjs';
+import { ENVIRONMENT_SERVICE_CONFIG } from 'src/app/configs/tokens/environment.token';
 
 @Injectable({
     providedIn: 'root',
@@ -12,7 +14,10 @@ export class ChatService {
     private previewChats$: Observable<IConversation[]> = this.previewChatsSub$.asObservable();
     private previewChats!: IConversation[];
     private conversations: Map<string, IMessage[]> = new Map<string, IMessage[]>();
-    constructor() {}
+    constructor(
+        private http: HttpClient,
+        @Inject(ENVIRONMENT_SERVICE_CONFIG) private env_config: ENV
+    ) {}
     /* getter and setter active conversation */
 
     get activeConversationGetter(): string {
@@ -50,6 +55,22 @@ export class ChatService {
         this.conversations = _conversations;
     }
 
+    /* FETCH CONVERSATIONS */
+
+    getPreviewChats$ = (userId: string): Observable<IConversation[]> => {
+        return this.http.get<IConversation[]>(`${this.env_config.host}/chat/preview-chats`, {
+            params: {
+                userId,
+            },
+        });
+    };
+
+    postNewMessage$ = (message: INewMessage): Observable<IMessage> => {
+        return this.http.post<IMessage>(`${this.env_config.host}/message/new-message`, message);
+    };
+
+    /* HANDLE MESSAGE */
+
     updateConversation = (name: string, _messages: IMessage[]): void => {
         this.conversations.set(name, _messages);
     };
@@ -82,6 +103,7 @@ export class ChatService {
             latestMsg: {
                 content: _message.content,
                 date: _message.createdAt,
+                senderId: userId,
             },
             isReaded: this.activeConversation === _conversation._id || userId === _message.senderId,
         });

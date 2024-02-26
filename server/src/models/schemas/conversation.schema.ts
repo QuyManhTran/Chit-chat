@@ -4,6 +4,7 @@ export interface IConversation extends Document {
     latestMsg: {
         content: string;
         date: Date;
+        senderId: string;
     };
 }
 
@@ -17,6 +18,7 @@ export const ConversationSchema: Schema = new Schema<IConversation>(
             type: Object,
             properties: {
                 content: String,
+                senderId: String,
                 date: Date,
             },
         },
