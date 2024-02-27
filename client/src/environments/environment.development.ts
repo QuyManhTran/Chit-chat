@@ -11,4 +11,5 @@ export const environment: ENV = {
         appId: '1:434281089480:web:a68c0cf6a39776defc58fd',
         measurementId: 'G-4R7E94T2XL',
     },
+    ws: 'http://localhost:3000',
 };

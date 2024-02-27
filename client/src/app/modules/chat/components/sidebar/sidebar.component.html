@@ -2,7 +2,8 @@
     @for (previewChat of previewChats; track $index) {
     <app-preview-chat [isReaded]="previewChat.isReaded" [date]="previewChat.latestMsg?.date"
         [latestMessage]="previewChat.latestMsg?.content||''" [chatId]="previewChat._id" [name]="previewChat.name"
-        [isActive]="previewChat._id === activeChat" (activeChatEmiter)="onActiveConversation($event)">
+        [isActive]="previewChat._id === activeChat" [isMine]="previewChat.callerId !== previewChat.latestMsg?.senderId"
+        [isOnline]="onlineUser.includes(previewChat.callerId)" (activeChatEmiter)="onActiveConversation($event)">
     </app-preview-chat>
     }
 </div>

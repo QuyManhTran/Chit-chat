@@ -24,6 +24,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     messages!: IMessage[];
     messageForm!: FormControl<string | null>;
     destroy$: Subject<void> = new Subject<void>();
+    userId!: string | undefined;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -32,18 +33,40 @@ export class ConversationComponent implements OnInit, OnDestroy {
     ) {
         this.activatedRoute.params.subscribe({
             next: (value) => {
-                this.messages = this.chatService.conversationsGetter.get(value?.['chatId']) || [];
+                if (this.chatService.conversationsGetter.get(value?.['chatId'])) {
+                    this.messages =
+                        this.chatService.conversationsGetter.get(value?.['chatId']) || [];
+                } else {
+                    this.getMessages(value?.['chatId']);
+                }
                 this.messageForm = new FormControl<string | null>('');
             },
         });
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.userId = this.userService.userGetter?._id;
+    }
 
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
+
+    getMessages = (chatId: string) => {
+        this.chatService
+            .getMessages$(chatId)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (value) => {
+                    console.log(value);
+                    this.messages = value;
+                },
+                error: (error) => {
+                    console.log(error);
+                },
+            });
+    };
 
     sendMessageHandler = (): void => {
         const message: INewMessage = {

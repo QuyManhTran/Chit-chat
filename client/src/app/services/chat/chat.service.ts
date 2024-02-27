@@ -65,6 +65,14 @@ export class ChatService {
         });
     };
 
+    getMessages$ = (chatId: string): Observable<IMessage[]> => {
+        return this.http.get<IMessage[]>(`${this.env_config.host}/message/get-messages`, {
+            params: {
+                chatId: chatId,
+            },
+        });
+    };
+
     postNewMessage$ = (message: INewMessage): Observable<IMessage> => {
         return this.http.post<IMessage>(`${this.env_config.host}/message/new-message`, message);
     };

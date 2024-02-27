@@ -149,7 +149,6 @@ export default class AuthController {
                 await TokenModel.findOneAndDelete({ token: refreshToken });
                 return res.sendStatus(401);
             }
-            console.log('decoded', decoded);
             try {
                 const token = await TokenModel.findOne({
                     token: refreshToken,

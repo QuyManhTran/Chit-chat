@@ -13,6 +13,8 @@ export class PreviewChatComponent {
     @Input() chatId!: string;
     @Input() isActive!: boolean;
     @Input() date!: Date | undefined;
+    @Input() isMine!: boolean;
+    @Input() isOnline!: boolean;
     @Output() activeChatEmiter: EventEmitter<string> = new EventEmitter<string>();
     onActiveConversation = () => {
         this.activeChatEmiter.emit(this.chatId);
