@@ -1,0 +1,11 @@
+<div class="w-full h-[100vh] flex flex-row">
+    <div class="w-[480px] flex flex-col max-h-full overflow-hidden">
+        <app-header></app-header>
+        <div class="flex-grow overflow-y-auto sidebar">
+            <app-sidebar></app-sidebar>
+        </div>
+    </div>
+    <main class="flex-grow h-full">
+        <router-outlet></router-outlet>
+    </main>
+</div>

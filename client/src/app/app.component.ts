@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
     NavigationCancel,
     NavigationEnd,
@@ -8,20 +8,25 @@ import {
     Event as RouterEvent,
 } from '@angular/router';
 import { LoadingType } from '@enums/app.enum';
+import { UserService } from '@services/user/user.service';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'chit-chat';
     isLoading: boolean = false;
     loadingType: LoadingType = LoadingType.FAST;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private userService: UserService) {
         this.router.events.subscribe((event) => {
             this.navigationInterceptor(event);
         });
+    }
+
+    ngOnInit(): void {
+        this.userService.initUser();
     }
 
     navigationInterceptor = (event: RouterEvent): void => {
@@ -31,7 +36,10 @@ export class AppComponent {
             this.isLoading = true;
         }
         if (event instanceof NavigationEnd) this.isLoading = false;
-        if (event instanceof NavigationCancel) this.isLoading = true;
-        if (event instanceof NavigationError) this.isLoading = true;
+        if (event instanceof NavigationCancel) {
+            console.log(event.reason);
+            this.isLoading = false;
+        }
+        if (event instanceof NavigationError) this.isLoading = false;
     };
 }

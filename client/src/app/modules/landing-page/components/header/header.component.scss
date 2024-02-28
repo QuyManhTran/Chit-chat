@@ -12,7 +12,7 @@
 }
 
 li.active-nav {
-  @apply relative after:absolute after:content-[''] after:top-[102%] after:left-0 after:w-0 after:h-[1.5px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full;
+  @apply relative after:absolute after:content-[''] after:top-[102%] after:left-0 after:w-0 after:h-[1px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full;
 }
 
 .animation-button {

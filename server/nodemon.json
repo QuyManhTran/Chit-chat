@@ -1,0 +1,10 @@
+{
+  "watch": ["src"],
+  "ext": "ts,json",
+  "ignore": ["src/**/*.spec.ts"],
+  "env": {
+    "NODE_ENV": "dev",
+    "Test_vals": "hello world"
+  },
+  "exec": "ts-node -r tsconfig-paths/register ./src/index.ts"
+}
