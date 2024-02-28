@@ -37,6 +37,24 @@ input:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 99px;
+  height: 20px;
+}
+
+.sidebar:hover::-webkit-scrollbar-thumb {
+  @apply bg-cgrey-300;
+}
+
 /**
   Animation
 **/

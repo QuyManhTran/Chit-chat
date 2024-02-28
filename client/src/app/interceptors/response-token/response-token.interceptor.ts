@@ -32,6 +32,15 @@ export class ResponseTokenInterceptor implements HttpInterceptor {
                     });
                     return transformResponse;
                 }
+                if (event instanceof HttpResponse && event.body && event.body?.data) {
+                    const transformResponse = new HttpResponse({
+                        body: event.body.data,
+                        status: event.status,
+                        statusText: event.statusText,
+                        headers: event.headers,
+                    });
+                    return transformResponse;
+                }
                 return event;
             })
         );

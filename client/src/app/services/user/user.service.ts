@@ -11,13 +11,22 @@ import { LOCAL_STORAGE_TOKE } from 'src/app/configs/tokens/storage.token';
 })
 export class UserService {
     private user!: IUserInfor | undefined;
-    isLogged!: boolean;
+    private isLogged!: boolean;
     constructor(
         @Inject(LOCAL_STORAGE_TOKE) private storage: Storage,
         @Inject(ENVIRONMENT_SERVICE_CONFIG) private env_config: ENV,
         private router: Router,
         private http: HttpClient
     ) {}
+
+    get isLoggedGetter(): boolean {
+        return this.isLogged;
+    }
+
+    set isLoggedSetter(_isLogged: boolean) {
+        console.log(this.isLogged);
+        this.isLogged = _isLogged;
+    }
 
     get userGetter() {
         return this.user;
@@ -44,6 +53,7 @@ export class UserService {
         this.http.get<IUserInfor>(`${this.env_config.host}/auth/re-auth`).subscribe({
             next: (value) => {
                 console.log(value);
+                this.userSetter = value;
             },
             error: (error: HttpErrorResponse) => {
                 console.log(error.error);

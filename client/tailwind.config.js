@@ -17,18 +17,22 @@ module.exports = {
           100: "#cec9c1",
         },
         cblack: {
+          200: "#54656F",
           300: "#00000080",
           400: "#111B21",
           500: "#1c1e21",
         },
         cgrey: {
+          50: "#F0F2F5",
           100: "#b2b2b2",
           200: "#edecec",
           300: "#d0d1d3",
           400: "#d9d9d9",
           500: "#999",
+          600: "#6B7C85",
         },
         cyellow: {
+          200: "#f0ebe3",
           400: "#FFEBCF",
           500: "#f1c40f",
         },
@@ -36,7 +40,11 @@ module.exports = {
           500: "#F0F4F9",
         },
         cgreen: {
+          200: "#D9FDD3",
           500: "#07bc0c",
+        },
+        cblue: {
+          500: "#003BD2",
         },
       },
       transformOrigin: {

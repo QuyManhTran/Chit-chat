@@ -36,7 +36,10 @@ export class AppComponent implements OnInit {
             this.isLoading = true;
         }
         if (event instanceof NavigationEnd) this.isLoading = false;
-        if (event instanceof NavigationCancel) this.isLoading = true;
-        if (event instanceof NavigationError) this.isLoading = true;
+        if (event instanceof NavigationCancel) {
+            console.log(event.reason);
+            this.isLoading = false;
+        }
+        if (event instanceof NavigationError) this.isLoading = false;
     };
 }

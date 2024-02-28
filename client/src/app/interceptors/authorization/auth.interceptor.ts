@@ -26,8 +26,8 @@ export class AuthInterceptor implements HttpInterceptor {
                     httpErrorResponse.status === HttpStatusCode.Forbidden
                 ) {
                     /* handler auth remove all */
-                    this.userService.unAuthHandler();
                     this.authService.tokenSetter = '';
+                    this.userService.unAuthHandler();
                     return of(
                         new HttpResponse<IErrorResponse>({
                             body: { error: httpErrorResponse.message },

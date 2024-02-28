@@ -1,0 +1,10 @@
+<div
+    class="relative px-3 rounded-bl-[10px] rounded-br-[10px] flex flex-row gap-3 w-fit after:content-[''] after:absolute after:top-0 after:border-l-[15px]  after:border-r-[15px] after:border-b-[20px] after:border-b-transparent {{isMine ? 'bg-cgreen-200 ml-auto rounded-tl-[10px] after:left-full after:border-l-cgreen-200 after:border-r-transparent':'bg-white rounded-tr-[10px] after:right-full after:border-l-transparent after:border-r-white'}}">
+    <span class="py-3 text-base font-normal tracking-tighter max-w-[240px] break-words">{{content}}</span>
+    <div class="self-end text-[11px] flex flex-row items-center gap-1">
+        <span class="tracking-tighter">{{date|date:'h:mm aaaaa\'m\''}}</span>
+        <span class="material-symbols-outlined text-[20px] text-cblue-500">
+            done_all
+        </span>
+    </div>
+</div>
