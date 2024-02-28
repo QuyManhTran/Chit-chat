@@ -9,8 +9,10 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IMessage, INewMessage } from '@interfaces/chat/user.interface';
+import { ICaller, IMessage, INewMessage } from '@interfaces/chat/user.interface';
+import { ISocketMessage } from '@interfaces/socket/socket.interface';
 import { ChatService } from '@services/chat/chat.service';
+import { SocketService } from '@services/socket/socket.service';
 import { UserService } from '@services/user/user.service';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -25,20 +27,25 @@ export class ConversationComponent implements OnInit, OnDestroy {
     messageForm!: FormControl<string | null>;
     destroy$: Subject<void> = new Subject<void>();
     userId!: string | undefined;
+    chatId!: string | undefined;
+    caller!: ICaller;
 
     constructor(
         private activatedRoute: ActivatedRoute,
         @SkipSelf() @Optional() private chatService: ChatService,
-        @SkipSelf() @Optional() private userService: UserService
+        @SkipSelf() @Optional() private userService: UserService,
+        @SkipSelf() @Optional() private socketService: SocketService
     ) {
         this.activatedRoute.params.subscribe({
             next: (value) => {
+                this.chatId = value?.['chatId'];
                 if (this.chatService.conversationsGetter.get(value?.['chatId'])) {
                     this.messages =
                         this.chatService.conversationsGetter.get(value?.['chatId']) || [];
                 } else {
                     this.getMessages(value?.['chatId']);
                 }
+                this.caller = JSON.parse(this.activatedRoute.snapshot.fragment || '');
                 this.messageForm = new FormControl<string | null>('');
             },
         });
@@ -46,9 +53,17 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.userId = this.userService.userGetter?._id;
+        this.socketService.socketGetter.on('getMessage', (newMessage: IMessage) => {
+            if (newMessage.chatId === this.chatId) {
+                this.messages = [newMessage, ...this.messages];
+                this.chatService.updateConversation(this.chatId, this.messages);
+                this.chatService.updateNewMessage(newMessage, newMessage.senderId || '123456789');
+            }
+        });
     }
 
     ngOnDestroy(): void {
+        this.socketService.onOffGetMessage();
         this.destroy$.next();
         this.destroy$.complete();
     }
@@ -80,6 +95,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (value) => {
                     console.log(value);
+                    this.newSocketMessageHandler({ message: value, callerId: this.caller.id });
                 },
                 error: (error: HttpErrorResponse) => {
                     console.log(error.error?.message);
@@ -112,9 +128,13 @@ export class ConversationComponent implements OnInit, OnDestroy {
         this.messageForm.reset();
     };
 
-    onEnterKeyup = () => {
+    onEnterKeyup = (): void => {
         if (this.messageForm.value) {
             this.sendMessageHandler();
         }
+    };
+
+    newSocketMessageHandler = (socketMessage: ISocketMessage): void => {
+        this.socketService.socketGetter.emit('newMessage', socketMessage);
     };
 }

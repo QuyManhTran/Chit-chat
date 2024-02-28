@@ -15,6 +15,7 @@ export class PreviewChatComponent {
     @Input() date!: Date | undefined;
     @Input() isMine!: boolean;
     @Input() isOnline!: boolean;
+    @Input() callerId!: string;
     @Output() activeChatEmiter: EventEmitter<string> = new EventEmitter<string>();
     onActiveConversation = () => {
         this.activeChatEmiter.emit(this.chatId);

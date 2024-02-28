@@ -31,4 +31,8 @@ export class SocketService {
     onOffOnlineUser = (): void => {
         this.socket.off('getOnlineUsers');
     };
+
+    onOffGetMessage = (): void => {
+        this.socket.off('getMessage');
+    };
 }

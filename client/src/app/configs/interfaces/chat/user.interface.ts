@@ -4,6 +4,11 @@ export interface IUserInfor {
     email: string;
 }
 
+export interface ICaller {
+    name: string;
+    id: string;
+}
+
 export interface IMessage {
     _id: string;
     chatId: string;
