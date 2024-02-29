@@ -9,6 +9,7 @@ import { PreviewChatComponent } from './components/share/preview-chat/preview-ch
 import { ConversationComponent } from './components/conversation/conversation.component';
 import { MessageComponent } from './components/share/message/message.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,6 @@ import { ReactiveFormsModule } from '@angular/forms';
         ConversationComponent,
         MessageComponent,
     ],
-    imports: [CommonModule, ChatRoutingModule, ReactiveFormsModule],
+    imports: [CommonModule, ChatRoutingModule, ReactiveFormsModule, PickerComponent],
 })
 export class ChatModule {}

@@ -1,12 +1,13 @@
-<a class="flex flex-row gap-3 px-6 mx-2 pt-3 rounded-[10px] {{isActive ? 'bg-cgreen-200':'bg-transparent hover:bg-cgrey-50'}}"
+<a class="flex flex-row gap-3 px-6 mx-2 rounded-[10px] items-center {{isActive ? 'bg-cgreen-200':'bg-transparent hover:bg-cgrey-50'}}"
     [routerLink]="chatId" (click)="onActiveConversation()" [fragment]="{name:name, id:callerId}|json">
-    <div
-        class="flex-none rounded-[50%] border-[2px] overflow-hidden w-fit h-fit {{isOnline ? 'border-cgreen-500':'border-cgrey-50'}}">
+    <div class="relative flex-none rounded-[50%] border-[2px] w-fit h-fit border-cgrey-50">
         <img src="./assets/images/public/avatars/2.png" alt="avatar"
-            class="w-[50px] h-[50px] border-[3px] border-white">
+            class="w-[60px] h-[60px] border-[3px] rounded-[50%] border-white">
+        <span *ngIf="isOnline"
+            class="absolute bottom-[6px] right-2 translate-x-1/2 w-4 h-4 bg-cgreen-500 rounded-[50%]"></span>
     </div>
     <div
-        class="flex-grow flex flex-col justify-between  pb-3 border-b border-b-cgrey-50 select-none {{isReaded ? 'text-cgrey-600':'text-cblack-500'}}">
+        class="flex-grow flex flex-col justify-center pb-3 pt-3 border-b border-b-cgrey-50 select-none {{isReaded ? 'text-cgrey-600':'text-cblack-500'}}">
         <div class="flex flex-row justify-between items-center tracking-tighter">
             <span class="text-lg font-semibold">{{name}}</span>
             <span *ngIf="date" class="text-sm font-semibold">{{date|date:'h:mm aaaaa\'m\''}}</span>

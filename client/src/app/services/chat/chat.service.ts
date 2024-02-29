@@ -14,6 +14,9 @@ export class ChatService {
     private previewChats$: Observable<IConversation[]> = this.previewChatsSub$.asObservable();
     private previewChats!: IConversation[];
     private conversations: Map<string, IMessage[]> = new Map<string, IMessage[]>();
+    private onlineUsers!: string[];
+    private onlineUsersSub$: Subject<string[]> = new Subject<string[]>();
+    private onlineUsers$: Observable<string[]> = this.onlineUsersSub$.asObservable();
     constructor(
         private http: HttpClient,
         @Inject(ENVIRONMENT_SERVICE_CONFIG) private env_config: ENV
@@ -55,6 +58,21 @@ export class ChatService {
         this.conversations = _conversations;
     }
 
+    /* getter and setter online users */
+    get onlineUsersGetter(): string[] {
+        return this.onlineUsers;
+    }
+
+    set onlineUsersSetter(_onlineUsers: string[]) {
+        this.onlineUsers = _onlineUsers;
+    }
+
+    get onlineUsers$Getter(): Observable<string[]> {
+        return this.onlineUsers$;
+    }
+    get onlineUsersSub$Getter(): Subject<string[]> {
+        return this.onlineUsersSub$;
+    }
     /* FETCH CONVERSATIONS */
 
     getPreviewChats$ = (userId: string): Observable<IConversation[]> => {
@@ -111,7 +129,7 @@ export class ChatService {
             latestMsg: {
                 content: _message.content,
                 date: _message.createdAt,
-                senderId: userId,
+                senderId: _message.senderId,
             },
             isReaded: this.activeConversation === _conversation._id || userId === _message.senderId,
         });

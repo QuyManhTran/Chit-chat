@@ -23,11 +23,7 @@ export const socketConfig = (io: Server) => {
             const user = onlineUsers.find((user) => user.userId === data.callerId);
             if (user) {
                 io.to(user.socketId).emit('getMessage', data.message);
-                io.to([user.socketId, socket.id]).emit('notifications', {
-                    chatId,
-                    content,
-                    isReaded: false,
-                });
+                io.to([user.socketId, socket.id]).emit('notification', data.message);
             }
         });
 

@@ -35,4 +35,8 @@ export class SocketService {
     onOffGetMessage = (): void => {
         this.socket.off('getMessage');
     };
+
+    onOffNotification = (): void => {
+        this.socket.off('notification');
+    };
 }
