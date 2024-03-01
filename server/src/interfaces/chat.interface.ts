@@ -11,6 +11,8 @@ export interface INewMessage {
     chatId: string;
     senderId: string;
     content: string;
+    type: string;
+    name?: string;
 }
 
 export interface IMessage {
@@ -18,6 +20,8 @@ export interface IMessage {
     chatId: string;
     senderId: string;
     content: string;
+    type: string;
+    name?: string;
     createdAt: Date;
     updatedAt: Date;
     __v: number;

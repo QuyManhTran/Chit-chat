@@ -22,9 +22,13 @@ export default class MessageController {
 
     static newMessage = async (req: Request, res: Response) => {
         const accessToken = res.locals.accessToken;
-        const { chatId, senderId, content } = <INewMessage>req.body;
+        const { chatId, senderId, content, type, name } = <INewMessage>req.body;
         try {
-            const message = await MessageModel.create({ chatId, senderId, content });
+            const message = await MessageModel.create(
+                name
+                    ? { chatId, senderId, content, type, name }
+                    : { chatId, senderId, content, type }
+            );
             await ConversationModel.findOneAndUpdate(
                 { _id: chatId, members: { $in: [senderId] } },
                 {
@@ -32,6 +36,7 @@ export default class MessageController {
                         content,
                         senderId,
                         date: new Date(),
+                        type,
                     },
                 }
             );

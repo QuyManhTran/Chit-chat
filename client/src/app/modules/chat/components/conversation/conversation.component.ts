@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Attachment, MessageType } from '@enums/chat.enum';
 import { ICaller, IMessage, INewMessage } from '@interfaces/chat/user.interface';
 import { ISocketMessage } from '@interfaces/socket/socket.interface';
 import { ChatService } from '@services/chat/chat.service';
@@ -70,7 +71,6 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.chatService.onlineUsers$Getter.pipe(takeUntil(this.destroy$)).subscribe({
             next: (value) => {
-                console.log('fdjsa', value);
                 this.onlineUsers = value;
             },
         });
@@ -109,6 +109,7 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
             chatId: this.activatedRoute.snapshot.params?.['chatId'],
             senderId: this.userId || '123456789',
             content: this.messageForm.value || '',
+            type: MessageType.TEXT,
         };
         this.chatService
             .postNewMessage$(message)
@@ -117,26 +118,15 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
                 next: (value) => {
                     console.log(value);
                     this.newSocketMessageHandler({ message: value, callerId: this.caller.id });
+                    this.sucessfulMessageHandler(value);
                 },
                 error: (error: HttpErrorResponse) => {
                     console.log(error.error?.message);
                 },
-                complete: () => {
-                    this.sucessfulMessageHandler();
-                },
             });
     };
 
-    sucessfulMessageHandler = (): void => {
-        const newMessage: IMessage = {
-            __v: 0,
-            _id: '123',
-            chatId: this.activatedRoute.snapshot.params?.['chatId'],
-            senderId: this.userId || '123456789',
-            content: this.messageForm.value || '',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        };
+    sucessfulMessageHandler = (newMessage: IMessage): void => {
         this.messages = [newMessage, ...this.messages];
         this.chatService.updateConversation(
             this.activatedRoute.snapshot.params?.['chatId'],
@@ -190,6 +180,12 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
         if (file) {
             const { name, size }: { name: string; size: number } = file;
             const type: string = file.type.split('/')[0];
+            if (type !== MessageType.APPLICATION && type !== MessageType.PHOTO)
+                return alert("Sorry, your file isn't supported !");
+            const type2: string = file.type.split('/')[1];
+            if (type2 !== MessageType.DOCUMENT && type === MessageType.APPLICATION)
+                return alert('Sorry, My app just apply pdf file !');
+            if (size > Attachment.MAX_SIZE) return alert('Sorry, the maxium file size is 5MB !');
             console.log({ name, size, type });
             const reader = new FileReader();
 

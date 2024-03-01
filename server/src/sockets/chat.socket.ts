@@ -19,7 +19,6 @@ export const socketConfig = (io: Server) => {
         });
         //new message
         socket.on('newMessage', (data: ISocketMessage) => {
-            const { chatId, content } = data.message;
             const user = onlineUsers.find((user) => user.userId === data.callerId);
             if (user) {
                 io.to(user.socketId).emit('getMessage', data.message);

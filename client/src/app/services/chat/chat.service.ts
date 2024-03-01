@@ -130,6 +130,7 @@ export class ChatService {
                 content: _message.content,
                 date: _message.createdAt,
                 senderId: _message.senderId,
+                type: _message.type,
             },
             isReaded: this.activeConversation === _conversation._id || userId === _message.senderId,
         });

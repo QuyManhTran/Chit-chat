@@ -13,7 +13,18 @@
             <span *ngIf="date" class="text-sm font-semibold">{{date|date:'h:mm aaaaa\'m\''}}</span>
         </div>
         <div class="flex flex-row justify-between items-center tracking-tighter">
-            <span class="text-base font-medium line-clamp-1">{{isMine ? 'You: ':''}}{{latestMessage}}</span>
+            <span *ngIf="type === 'text'" class="text-base font-medium line-clamp-1">{{isMine ?
+                'You: ':''}}{{latestMessage}}</span>
+            <span *ngIf="type === 'pdf'" class="text-base font-medium line-clamp-1 flex flex-row items-center gap-1">
+                <span class="material-symbols-outlined fill">
+                    description
+                </span>
+                {{isMine ? 'You:': name}} sent an attachment</span>
+            <span *ngIf="type === 'image'" class="text-base font-medium line-clamp-1 flex flex-row items-center gap-1">
+                <span class="material-symbols-outlined fill">
+                    photo_camera
+                </span>
+                {{isMine ? 'You:': name}} sent a photo</span>
             @if (!isReaded) {
             <span class="text-white text-base font-medium px-[6px] py-[1px] rounded-[10px] bg-cgreen-500 h-fit">2</span>
             }

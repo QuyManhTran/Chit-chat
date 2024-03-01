@@ -1,3 +1,5 @@
+import { MessageType } from '@enums/chat.enum';
+
 export interface IUserInfor {
     _id: string;
     name: string;
@@ -14,6 +16,8 @@ export interface IMessage {
     chatId: string;
     senderId: string;
     content: string;
+    type: MessageType;
+    name?: string;
     createdAt: Date;
     updatedAt: Date;
     __v: number;
@@ -23,6 +27,8 @@ export interface INewMessage {
     chatId: string;
     senderId: string;
     content: string;
+    type: MessageType;
+    name?: string;
 }
 
 export interface IConversation {
@@ -34,6 +40,7 @@ export interface IConversation {
         content: string;
         senderId: string;
         date: Date;
+        type: MessageType;
     };
     isReaded: boolean;
     createAt: Date;
