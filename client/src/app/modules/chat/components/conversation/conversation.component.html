@@ -39,8 +39,8 @@
         <div class="px-5 py-3 flex-grow flex flex-col-reverse gap-2 overflow-y-scroll overflow-x-hidden sidebar bg-cyellow-200"
             style="background-image: url('./assets/images/chat/conversation-bg.png');">
             @for (message of messages; track $index) {
-            <app-message [isMine]="userId === message.senderId" [content]="message.content"
-                [date]="message.createdAt"></app-message>
+            <app-message [isMine]="userId === message.senderId" [content]="message.content" [date]="message.createdAt"
+                [type]="message.type" [name]="message?.name||''"></app-message>
             }
         </div>
         <div class="flex flex-row w-full items-center gap-6 py-[10px] px-5 bg-cgrey-50 text-cgrey-600">

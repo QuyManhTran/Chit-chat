@@ -186,13 +186,36 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
             if (type2 !== MessageType.DOCUMENT && type === MessageType.APPLICATION)
                 return alert('Sorry, My app just apply pdf file !');
             if (size > Attachment.MAX_SIZE) return alert('Sorry, the maxium file size is 5MB !');
-            console.log({ name, size, type });
             const reader = new FileReader();
-
-            reader.onload = function (event) {
-                const base64Data = event.target?.result;
+            let base64Data: string = '';
+            reader.onload = (event) => {
+                base64Data = event.target?.result?.toString() || '';
+                const newAttachment: INewMessage = {
+                    chatId: this.chatId || 'unknown',
+                    senderId: this.userId || '123456789',
+                    content: base64Data,
+                    type: type2 === MessageType.DOCUMENT ? type2 : type,
+                    name: name,
+                };
+                this.newAttachmentHandler(newAttachment);
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    newAttachmentHandler = (attachment: INewMessage) => {
+        this.chatService
+            .postNewAttachment$(attachment)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (value) => {
+                    console.log(value);
+                    this.newSocketMessageHandler({ message: value, callerId: this.caller.id });
+                    this.sucessfulMessageHandler(value);
+                },
+                error: (error) => {
+                    console.log(error);
+                },
+            });
     };
 }

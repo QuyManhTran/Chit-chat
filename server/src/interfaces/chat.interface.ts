@@ -1,3 +1,5 @@
+import { MessageType } from '@customes/message.type';
+
 export interface INewConversation {
     firstId: string;
     secondId: string;
@@ -12,6 +14,14 @@ export interface INewMessage {
     senderId: string;
     content: string;
     type: string;
+    name?: string;
+}
+
+export interface INewAttachment {
+    chatId: string;
+    senderId: string;
+    content: string;
+    type: MessageType;
     name?: string;
 }
 

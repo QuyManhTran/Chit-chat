@@ -92,7 +92,17 @@ export class ChatService {
     };
 
     postNewMessage$ = (message: INewMessage): Observable<IMessage> => {
-        return this.http.post<IMessage>(`${this.env_config.host}/message/new-message`, message);
+        return this.http.post<IMessage>(
+            `${this.env_config.host}/message/new-message/text`,
+            message
+        );
+    };
+
+    postNewAttachment$ = (message: INewMessage): Observable<IMessage> => {
+        return this.http.post<IMessage>(
+            `${this.env_config.host}/message/new-message/attachment`,
+            message
+        );
     };
 
     /* HANDLE MESSAGE */
