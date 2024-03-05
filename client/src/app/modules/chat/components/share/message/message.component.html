@@ -12,7 +12,7 @@
     <img [src]="content" [alt]="name" class="object-cover max-h-[200px] max-w-full rounded-[20px] shadow-sd3">
 </div>
 <div *ngIf="type==='pdf'" class="w-fit {{isMine ? 'ml-auto':''}}">
-    <a [download]="name" [href]="content"
+    <a [download]="name" [href]="content" target="_blank"
         class="rounded-[10px] shadow-sd3 pl-3 py-3 flex flex-row gap-2 items-center {{isMine ? 'bg-cgreen-200':'bg-white'}}">
         <span class="material-symbols-outlined fill">
             picture_as_pdf

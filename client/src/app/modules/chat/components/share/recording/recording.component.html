@@ -1,0 +1,20 @@
+<div class="flex flex-row items-center w-fit ml-auto gap-3">
+    <i class="fa-solid fa-trash text-[18px]"></i>
+    <div id="wavesurfer" class="bg-white px-4 py-1 rounded-[25px] flex flex-row items-center gap-2">
+
+        <span *ngIf="!isRecording" class="material-symbols-rounded text-[32px] cursor-default"
+            (click)="onToggleRecording()">
+            play_arrow
+        </span>
+        <span *ngIf="isRecording" class="material-symbols-rounded text-[32px] cursor-default"
+            (click)="onToggleRecording()">
+            pause
+        </span>
+        <span class="material-symbols-outlined cursor-default" (click)="onStopRecording()">
+            stop_circle
+        </span>
+        <span class="material-symbols-outlined cursor-default" (click)="onToggleAudio()">
+            radio_button_checked
+        </span>
+    </div>
+</div>

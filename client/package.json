@@ -26,6 +26,7 @@
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.7.4",
     "tslib": "^2.3.0",
+    "wavesurfer.js": "^7.7.3",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
     "@angular/cli": "^17.1.1",
     "@angular/compiler-cli": "^17.1.0",
     "@types/jasmine": "~5.1.0",
+    "@types/wavesurfer.js": "^6.0.12",
     "autoprefixer": "^10.4.17",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

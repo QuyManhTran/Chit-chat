@@ -10,6 +10,8 @@ import { ConversationComponent } from './components/conversation/conversation.co
 import { MessageComponent } from './components/share/message/message.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { RecordingComponent } from './components/share/recording/recording.component';
+import { PreviewRecordingComponent } from './components/share/preview-recording/preview-recording.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +21,8 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
         PreviewChatComponent,
         ConversationComponent,
         MessageComponent,
+        RecordingComponent,
+        PreviewRecordingComponent,
     ],
     imports: [CommonModule, ChatRoutingModule, ReactiveFormsModule, PickerComponent],
 })
