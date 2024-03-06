@@ -31,6 +31,12 @@ export interface INewMessage {
     name?: string;
 }
 
+export interface INewAudio {
+    chatId: string;
+    senderId: string;
+    type: MessageType;
+}
+
 export interface IConversation {
     _id: string;
     name: string;

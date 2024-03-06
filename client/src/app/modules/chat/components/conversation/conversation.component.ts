@@ -13,7 +13,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Attachment, MessageType } from '@enums/chat.enum';
-import { ICaller, IMessage, INewMessage } from '@interfaces/chat/user.interface';
+import { ICaller, IMessage, INewAudio, INewMessage } from '@interfaces/chat/user.interface';
 import { ISocketMessage } from '@interfaces/socket/socket.interface';
 import { ChatService } from '@services/chat/chat.service';
 import { SocketService } from '@services/socket/socket.service';
@@ -35,6 +35,7 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
     chatId!: string | undefined;
     caller!: ICaller;
     isEmoji!: boolean;
+    isRecording!: boolean;
     @ViewChild('attachment') private attachmentRef!: ElementRef<HTMLInputElement>;
 
     constructor(
@@ -206,6 +207,37 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
     newAttachmentHandler = (attachment: INewMessage) => {
         this.chatService
             .postNewAttachment$(attachment)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (value) => {
+                    console.log(value);
+                    this.newSocketMessageHandler({ message: value, callerId: this.caller.id });
+                    this.sucessfulMessageHandler(value);
+                },
+                error: (error) => {
+                    console.log(error);
+                },
+            });
+    };
+
+    /* HANDLE RECORDING */
+    onOpenRecording = () => {
+        this.isRecording = true;
+    };
+
+    onDiscardRecording = () => {
+        this.isRecording = false;
+    };
+
+    onSendingAudio = (blob: Blob) => {
+        this.isRecording = false;
+        const newAudio: INewAudio = {
+            chatId: this.chatId || 'unknown',
+            senderId: this.userId || '123456789',
+            type: MessageType.AUDIO,
+        };
+        this.chatService
+            .postNewAudio$(newAudio, blob)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
                 next: (value) => {

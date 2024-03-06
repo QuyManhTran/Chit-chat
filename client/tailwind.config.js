@@ -46,6 +46,9 @@ module.exports = {
         cblue: {
           500: "#003BD2",
         },
+        cred: {
+          500: "#bd3b3d",
+        },
       },
       transformOrigin: {
         "bottom-center": "bottom center",

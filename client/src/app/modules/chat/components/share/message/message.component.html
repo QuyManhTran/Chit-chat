@@ -20,3 +20,5 @@
         <span class="text-[15px] font-medium tracking-tighter max-w-[200px] break-words pr-3">{{name}}</span>
     </a>
 </div>
+<app-preview-recording *ngIf="type ==='audio'" [audioURL]="content" [isMine]="isMine" [date]="date"
+    [name]="name"></app-preview-recording>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { IConversation, IMessage, INewMessage } from '@interfaces/chat/user.interface';
+import { IConversation, IMessage, INewAudio, INewMessage } from '@interfaces/chat/user.interface';
 import { ENV } from '@interfaces/environment/environment.interface';
 import { Observable, Subject } from 'rxjs';
 import { ENVIRONMENT_SERVICE_CONFIG } from 'src/app/configs/tokens/environment.token';
@@ -102,6 +102,18 @@ export class ChatService {
         return this.http.post<IMessage>(
             `${this.env_config.host}/message/new-message/attachment`,
             message
+        );
+    };
+
+    postNewAudio$ = (message: INewAudio, audio: Blob): Observable<IMessage> => {
+        const formData = new FormData();
+        formData.append('audio', audio, 'audio.mp3');
+        for (const [key, value] of Object.entries(message)) {
+            formData.append(key, value);
+        }
+        return this.http.post<IMessage>(
+            `${this.env_config.host}/message/new-message/audio`,
+            formData
         );
     };
 

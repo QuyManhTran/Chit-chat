@@ -25,6 +25,12 @@ export interface INewAttachment {
     name?: string;
 }
 
+export interface INewAudio {
+    chatId: string;
+    senderId: string;
+    type: MessageType;
+}
+
 export interface IMessage {
     _id: string;
     chatId: string;

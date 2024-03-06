@@ -1,13 +1,12 @@
-<div class="flex flex-row items-center w-fit ml-auto gap-3">
-    <i class="fa-solid fa-trash text-[18px]"></i>
-    <div id="wavesurfer" class="bg-white px-4 py-1 rounded-[25px] flex flex-row items-center gap-2">
-        <span *ngIf="!isPlaying" class="material-symbols-rounded text-[32px] cursor-default"
-            (click)="onToggleRecording()">
-            play_arrow
-        </span>
-        <span *ngIf="isPlaying" class="material-symbols-rounded text-[32px] cursor-default"
-            (click)="onToggleRecording()">
-            pause
-        </span>
+<div class="px-4 py-2 rounded-[25px] flex flex-row items-center w-fit gap-2 shadow-sd3 {{isMine ? 'ml-auto  bg-cgreen-200':'bg-white'}}"
+    [title]="date|date:'MMMM d, y, \'at\' h:mm:ss'">
+    <span *ngIf="!isPlaying" class="material-symbols-rounded text-[32px] cursor-default" (click)="onToggleRecording()">
+        play_arrow
+    </span>
+    <span *ngIf="isPlaying" class="material-symbols-rounded text-[32px] cursor-default" (click)="onToggleRecording()">
+        pause
+    </span>
+    <div [ngClass]="name">
     </div>
+    <span class="text-sm tabular-nums">{{time}}</span>
 </div>
