@@ -8,10 +8,10 @@
         </span>
     </div>
 </div>
-<div *ngIf="type==='image'" class="w-fit {{isMine ? 'ml-auto':''}}">
+<div *ngIf="type==='image'" class="w-fit {{isMine ? 'ml-auto':''}}" title="{{date|date:'MMMM d, y, \'at\' h:mm:ss'}}">
     <img [src]="content" [alt]="name" class="object-cover max-h-[200px] max-w-full rounded-[20px] shadow-sd3">
 </div>
-<div *ngIf="type==='pdf'" class="w-fit {{isMine ? 'ml-auto':''}}">
+<div *ngIf="type==='pdf'" class="w-fit {{isMine ? 'ml-auto':''}}" title="{{date|date:'MMMM d, y, \'at\' h:mm:ss'}}">
     <a [download]="name" [href]="content" target="_blank"
         class="rounded-[10px] shadow-sd3 pl-3 py-3 flex flex-row gap-2 items-center {{isMine ? 'bg-cgreen-200':'bg-white'}}">
         <span class="material-symbols-outlined fill">

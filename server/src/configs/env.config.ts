@@ -11,6 +11,9 @@ export interface ENV_VAL extends DotenvParseOutput {
     CLOUDINARY_NAME: string;
     CLOUDINARY_KEY: string;
     CLOUDINARY_SECRET: string;
+    ZEGO_APP_ID: string;
+    ZEGO_SERVER_ID: string;
+    ZEGO_EFFECTIVE_TIME: string;
 }
 
 const data = config({

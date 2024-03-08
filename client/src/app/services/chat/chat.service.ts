@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { IConversation, IMessage, INewAudio, INewMessage } from '@interfaces/chat/user.interface';
+import {
+    IConversation,
+    IMessage,
+    INewAudio,
+    INewMessage,
+    IZegoToken,
+} from '@interfaces/chat/user.interface';
 import { ENV } from '@interfaces/environment/environment.interface';
 import { Observable, Subject } from 'rxjs';
 import { ENVIRONMENT_SERVICE_CONFIG } from 'src/app/configs/tokens/environment.token';
@@ -158,5 +164,15 @@ export class ChatService {
         });
         this.previewChatsSetter = newPreviewChats;
         this.previewChatsSubGetter$.next(this.previewChats);
+    };
+
+    /* HANDLE AUDIO AND VIDEO CALL */
+
+    getZegoToken$ = (data: IZegoToken): Observable<string> => {
+        return this.http.get<string>(`${this.env_config.host}/auth/zego-token`, {
+            params: {
+                ...data,
+            },
+        });
     };
 }

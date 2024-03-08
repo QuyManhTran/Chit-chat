@@ -12,4 +12,8 @@ export const environment: ENV = {
         measurementId: 'G-4R7E94T2XL',
     },
     ws: 'http://localhost:3000',
+    zego: {
+        appId: 353335602,
+        serverId: '614afc5837f4f1dea48c636f6e49208b',
+    },
 };

@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { RecordingComponent } from './components/share/recording/recording.component';
 import { PreviewRecordingComponent } from './components/share/preview-recording/preview-recording.component';
+import { AudioCallComponent } from './components/audio-call/audio-call.component';
+import { WrapperchatComponent } from './components/wrapperchat/wrapperchat.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +25,8 @@ import { PreviewRecordingComponent } from './components/share/preview-recording/
         MessageComponent,
         RecordingComponent,
         PreviewRecordingComponent,
+        AudioCallComponent,
+        WrapperchatComponent,
     ],
     imports: [CommonModule, ChatRoutingModule, ReactiveFormsModule, PickerComponent],
 })

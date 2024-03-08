@@ -1,4 +1,6 @@
-import { MessageType } from '@enums/chat.enum';
+import { Call, MessageType } from '@enums/chat.enum';
+import { ZegoStreamList } from 'zego-express-engine-webrtc/sdk/code/zh/ZegoExpressEntity.web';
+import { ZegoUser } from 'zego-express-engine-webrtc/sdk/src/common/zego.entity';
 
 export interface IUserInfor {
     _id: string;
@@ -53,3 +55,48 @@ export interface IConversation {
     updatedAt: Date;
     __v: number;
 }
+
+export interface IOutGoing {
+    sender: {
+        id: string;
+        name: string;
+    };
+    callerId: string;
+    roomId: string;
+    streamId: string;
+    type: Call;
+}
+
+export interface IInComing {
+    sender: {
+        name: string;
+        id: string;
+    };
+    roomId: string;
+    streamId: string;
+    type: Call;
+}
+
+export interface IZegoToken {
+    appId: number;
+    userId: string;
+    serverId: string;
+}
+
+export interface ILoginRoom {
+    roomID: string;
+    user: ZegoUser;
+}
+
+export type RoomUserUpdateCallBack = (
+    roomID: string,
+    updateType: 'DELETE' | 'ADD',
+    userList: ZegoUser[]
+) => void;
+
+export type RoomStreamUpdateCallBack = (
+    roomID: string,
+    updateType: 'DELETE' | 'ADD',
+    streamList: ZegoStreamList[],
+    extendedData: string
+) => void;

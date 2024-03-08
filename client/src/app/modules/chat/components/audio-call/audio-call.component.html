@@ -1,0 +1,27 @@
+<main class="w-full h-full pt-8 flex flex-col items-center gap-16">
+    <header class="flex flex-col items-center">
+        <h1 class="text-[40px] tracking-tighter font-semibold text-cblack-500 leading-[40px]">
+            {{callerName}}
+        </h1>
+        <span class="block text-base tracking-tighter font-medium">Calling audio</span>
+    </header>
+    <!-- <img src="./assets/images/public/avatars/2.png" alt="avatar.png"
+        class="h-[240px] w-[240px] object-cover rounded-[1/2]"> -->
+
+    <div id="remote-video" class="relative w-[320px] h-[560px]">
+        <video #remoteVideo autoplay="true" [playsInline]="true" muted="false"
+            class="w-full h-full object-cover"></video>
+        <div #localWrapper id="local-video" style="position: absolute;width: 100%; height: 100%; top: 0;left: 0;"
+            class="z-[1]">
+            <video #localVideo autoplay="true" [playsInline]="true" muted="false"
+                class="absolute w-full h-full object-cover"></video>
+        </div>
+        <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-row justify-between z-[2]">
+            <div class="w-12 h-12 bg-danger rounded-[50%] flex flex-row items-center justify-center">
+                <span class="material-symbols-rounded text-white select-none text-24px">
+                    call_end
+                </span>
+            </div>
+        </div>
+    </div>
+</main>

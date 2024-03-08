@@ -5,3 +5,8 @@ export enum MessageType {
     DOCUMENT = 'pdf',
     APPLICATION = 'application',
 }
+
+export enum Call {
+    AUDIO = 'audio',
+    VIDEO = 'video',
+}

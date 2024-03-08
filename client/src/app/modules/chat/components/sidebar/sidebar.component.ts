@@ -37,14 +37,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
                     console.log(error.error?.message);
                 },
             });
-        this.socketService.onConnect();
         this.socketService.emitOnlineUser(this.userService.userGetter?._id || 'unknown');
         this.onOnlineUsers();
         this.onNotification();
     }
 
     ngOnDestroy(): void {
-        this.socketService.onDisconnect();
         this.socketService.onOffOnlineUser();
         this.socketService.onOffNotification();
         this.destroy$.next();

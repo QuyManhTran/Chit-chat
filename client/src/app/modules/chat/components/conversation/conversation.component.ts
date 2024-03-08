@@ -13,12 +13,18 @@ import {
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Attachment, MessageType } from '@enums/chat.enum';
-import { ICaller, IMessage, INewAudio, INewMessage } from '@interfaces/chat/user.interface';
+import {
+    ICaller,
+    IInComing,
+    IMessage,
+    INewAudio,
+    INewMessage,
+} from '@interfaces/chat/user.interface';
 import { ISocketMessage } from '@interfaces/socket/socket.interface';
 import { ChatService } from '@services/chat/chat.service';
 import { SocketService } from '@services/socket/socket.service';
 import { UserService } from '@services/user/user.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'app-conversation',
@@ -36,6 +42,8 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
     caller!: ICaller;
     isEmoji!: boolean;
     isRecording!: boolean;
+    inCommingCallSub$: Subject<IInComing | undefined> = new Subject<IInComing | undefined>();
+    inCommingCall$: Observable<IInComing | undefined> = this.inCommingCallSub$.asObservable();
     @ViewChild('attachment') private attachmentRef!: ElementRef<HTMLInputElement>;
 
     constructor(
@@ -70,6 +78,9 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.chatService.updateNewMessage(newMessage, this.userId || '123456789');
             }
         });
+        this.socketService.socketGetter.on('incoming', (data: IInComing) => {
+            this.inCommingCallSub$.next(data);
+        });
         this.chatService.onlineUsers$Getter.pipe(takeUntil(this.destroy$)).subscribe({
             next: (value) => {
                 this.onlineUsers = value;
@@ -79,6 +90,7 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnDestroy(): void {
         this.socketService.onOffGetMessage();
+        this.socketService.onOffAudioInComming();
         this.destroy$.next();
         this.destroy$.complete();
     }
@@ -249,5 +261,34 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
                     console.log(error);
                 },
             });
+    };
+
+    /* HANDLE AUDIO CALL */
+
+    onAudioClick = () => {
+        this.onPopupCall(this.userId + this.caller.id, false);
+    };
+
+    onDenyAudioCall = (senderId: string) => {
+        this.socketService.socketGetter.emit('deny-audio', senderId);
+        this.inCommingCallSub$.next(undefined);
+    };
+
+    onAcceptAudioCall = (roomId: string, streamId: string) => {
+        this.onPopupCall(roomId, true, streamId);
+    };
+
+    onPopupCall = (roomId: string, isAccept: boolean, streamId?: string) => {
+        const width = Math.floor(window.innerWidth * 0.9);
+        const height = Math.floor(window.innerHeight);
+        const left = window.innerWidth / 2 - width / 2;
+        const top = window.innerHeight / 2 - height / 2;
+        window.open(
+            `http://localhost:4200/chat/audio-call/${roomId}?name=${this.caller.name}&&id=${
+                this.caller.id
+            }${isAccept ? `&&incoming=true&&streamId=${streamId}` : ''}`,
+            'popup',
+            `width=${width}, height=${height}, left=${left}, top=${top}`
+        );
     };
 }

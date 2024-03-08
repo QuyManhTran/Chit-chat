@@ -1,4 +1,4 @@
-import { MessageType } from '@customes/message.type';
+import { Call, MessageType } from '@customes/message.type';
 
 export interface INewConversation {
     firstId: string;
@@ -50,4 +50,31 @@ export interface ISocketMessage {
 
 export interface IGetMessages {
     chatId: string;
+}
+
+export interface IOutGoing {
+    sender: {
+        id: string;
+        name: string;
+    };
+    callerId: string;
+    roomId: string;
+    streamId: string;
+    type: Call;
+}
+
+export interface IInComing {
+    sender: {
+        name: string;
+        id: string;
+    };
+    roomId: string;
+    streamId: string;
+    type: Call;
+}
+
+export interface IZegoToken {
+    appId: string;
+    userId: string;
+    serverId: string;
 }
