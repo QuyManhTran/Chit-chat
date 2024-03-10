@@ -46,6 +46,9 @@ module.exports = {
         cblue: {
           500: "#003BD2",
         },
+        cred: {
+          500: "#bd3b3d",
+        },
       },
       transformOrigin: {
         "bottom-center": "bottom center",
@@ -56,6 +59,7 @@ module.exports = {
       boxShadow: {
         sd1: "0px 5px 15px rgba(0, 0, 0, 0.2)",
         sd2: "0px 1px 10px 0px rgba(0,0,0,0.1), 0px 2px 15px 0px rgba(0,0,0,0.05)",
+        sd3: "0px 1px 10px 0px rgba(0,0,0,0.1), 0px 1px 10px 0px rgba(0,0,0,0.01)",
       },
     },
   },

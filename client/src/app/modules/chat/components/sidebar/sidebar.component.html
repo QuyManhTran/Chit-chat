@@ -4,7 +4,7 @@
         [latestMessage]="previewChat.latestMsg?.content||''" [chatId]="previewChat._id" [name]="previewChat.name"
         [isActive]="previewChat._id === activeChat" [isMine]="previewChat.callerId !== previewChat.latestMsg?.senderId"
         [isOnline]="onlineUser.includes(previewChat.callerId)" [callerId]="previewChat.callerId"
-        (activeChatEmiter)="onActiveConversation($event)">
+        [type]="previewChat.latestMsg?.type" (activeChatEmiter)="onActiveConversation($event)">
     </app-preview-chat>
     }
 </div>

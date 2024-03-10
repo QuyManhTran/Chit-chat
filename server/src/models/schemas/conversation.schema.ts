@@ -20,6 +20,7 @@ export const ConversationSchema: Schema = new Schema<IConversation>(
                 content: String,
                 senderId: String,
                 date: Date,
+                type: String,
             },
         },
     },

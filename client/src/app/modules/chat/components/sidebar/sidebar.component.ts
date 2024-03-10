@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, Optional, SkipSelf } from '@angular/core';
-import { Router } from '@angular/router';
-import { IConversation } from '@interfaces/chat/user.interface';
+import { IConversation, IMessage } from '@interfaces/chat/user.interface';
 import { IOnlineUser } from '@interfaces/socket/socket.interface';
 import { ChatService } from '@services/chat/chat.service';
 import { SocketService } from '@services/socket/socket.service';
@@ -22,8 +21,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     constructor(
         @SkipSelf() @Optional() private chatService: ChatService,
         @SkipSelf() @Optional() private userService: UserService,
-        @SkipSelf() @Optional() private socketService: SocketService,
-        private router: Router
+        @SkipSelf() @Optional() private socketService: SocketService
     ) {}
 
     ngOnInit(): void {
@@ -39,14 +37,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
                     console.log(error.error?.message);
                 },
             });
-        this.socketService.onConnect();
         this.socketService.emitOnlineUser(this.userService.userGetter?._id || 'unknown');
         this.onOnlineUsers();
+        this.onNotification();
     }
 
     ngOnDestroy(): void {
-        this.socketService.onDisconnect();
         this.socketService.onOffOnlineUser();
+        this.socketService.onOffNotification();
         this.destroy$.next();
         this.destroy$.complete();
     }
@@ -59,8 +57,28 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     onOnlineUsers = (): void => {
         this.socketService.socketGetter.on('getOnlineUsers', (onlineUser: IOnlineUser[]) => {
-            console.log(onlineUser);
-            this.onlineUser = onlineUser.map((user) => user.userId);
+            const _onlineUsers: string[] = onlineUser.map((user) => user.userId);
+            this.onlineUser = _onlineUsers;
+            this.chatService.onlineUsersSetter = _onlineUsers;
+            this.chatService.onlineUsersSub$Getter.next(_onlineUsers);
+        });
+    };
+
+    onNotification = (): void => {
+        this.socketService.socketGetter.on('notification', (newMessage: IMessage) => {
+            if (newMessage.chatId === this.activeChat) return;
+            this.chatService.updateNewMessage(
+                newMessage,
+                this.userService.userGetter?._id || 'unknown'
+            );
+            const _conversation: IMessage[] | undefined = this.chatService.conversationsGetter.get(
+                newMessage.chatId
+            );
+            if (!_conversation) return;
+            this.chatService.conversationsSetter = this.chatService.conversationsGetter.set(
+                newMessage.chatId,
+                [newMessage, ..._conversation]
+            );
         });
     };
 }

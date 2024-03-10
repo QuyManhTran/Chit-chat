@@ -35,4 +35,16 @@ export class SocketService {
     onOffGetMessage = (): void => {
         this.socket.off('getMessage');
     };
+
+    onOffNotification = (): void => {
+        this.socket.off('notification');
+    };
+
+    onOffAudioInComming = (): void => {
+        this.socket.off('incoming');
+    };
+
+    onOffDenyAudio = (): void => {
+        this.socket.off('deny-audio-outcoming');
+    };
 }

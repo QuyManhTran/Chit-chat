@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { IConversation, IMessage, INewMessage } from '@interfaces/chat/user.interface';
+import {
+    IConversation,
+    IMessage,
+    INewAudio,
+    INewMessage,
+    IZegoToken,
+} from '@interfaces/chat/user.interface';
 import { ENV } from '@interfaces/environment/environment.interface';
 import { Observable, Subject } from 'rxjs';
 import { ENVIRONMENT_SERVICE_CONFIG } from 'src/app/configs/tokens/environment.token';
@@ -14,6 +20,9 @@ export class ChatService {
     private previewChats$: Observable<IConversation[]> = this.previewChatsSub$.asObservable();
     private previewChats!: IConversation[];
     private conversations: Map<string, IMessage[]> = new Map<string, IMessage[]>();
+    private onlineUsers!: string[];
+    private onlineUsersSub$: Subject<string[]> = new Subject<string[]>();
+    private onlineUsers$: Observable<string[]> = this.onlineUsersSub$.asObservable();
     constructor(
         private http: HttpClient,
         @Inject(ENVIRONMENT_SERVICE_CONFIG) private env_config: ENV
@@ -55,6 +64,21 @@ export class ChatService {
         this.conversations = _conversations;
     }
 
+    /* getter and setter online users */
+    get onlineUsersGetter(): string[] {
+        return this.onlineUsers;
+    }
+
+    set onlineUsersSetter(_onlineUsers: string[]) {
+        this.onlineUsers = _onlineUsers;
+    }
+
+    get onlineUsers$Getter(): Observable<string[]> {
+        return this.onlineUsers$;
+    }
+    get onlineUsersSub$Getter(): Subject<string[]> {
+        return this.onlineUsersSub$;
+    }
     /* FETCH CONVERSATIONS */
 
     getPreviewChats$ = (userId: string): Observable<IConversation[]> => {
@@ -74,7 +98,29 @@ export class ChatService {
     };
 
     postNewMessage$ = (message: INewMessage): Observable<IMessage> => {
-        return this.http.post<IMessage>(`${this.env_config.host}/message/new-message`, message);
+        return this.http.post<IMessage>(
+            `${this.env_config.host}/message/new-message/text`,
+            message
+        );
+    };
+
+    postNewAttachment$ = (message: INewMessage): Observable<IMessage> => {
+        return this.http.post<IMessage>(
+            `${this.env_config.host}/message/new-message/attachment`,
+            message
+        );
+    };
+
+    postNewAudio$ = (message: INewAudio, audio: Blob): Observable<IMessage> => {
+        const formData = new FormData();
+        formData.append('audio', audio, 'audio.mp3');
+        for (const [key, value] of Object.entries(message)) {
+            formData.append(key, value);
+        }
+        return this.http.post<IMessage>(
+            `${this.env_config.host}/message/new-message/audio`,
+            formData
+        );
     };
 
     /* HANDLE MESSAGE */
@@ -111,11 +157,22 @@ export class ChatService {
             latestMsg: {
                 content: _message.content,
                 date: _message.createdAt,
-                senderId: userId,
+                senderId: _message.senderId,
+                type: _message.type,
             },
             isReaded: this.activeConversation === _conversation._id || userId === _message.senderId,
         });
         this.previewChatsSetter = newPreviewChats;
         this.previewChatsSubGetter$.next(this.previewChats);
+    };
+
+    /* HANDLE AUDIO AND VIDEO CALL */
+
+    getZegoToken$ = (data: IZegoToken): Observable<string> => {
+        return this.http.get<string>(`${this.env_config.host}/auth/zego-token`, {
+            params: {
+                ...data,
+            },
+        });
     };
 }
