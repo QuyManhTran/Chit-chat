@@ -57,7 +57,7 @@ export const socketConfig = (io: Server) => {
 
         // audio deny
         socket.on('deny-audio', (callerId: string) => {
-            const user = onlineUsers.find((user) => user.userId === callerId);
+            const user = audioOnlineUsers.find((user) => user.userId === callerId);
             if (user) {
                 io.to(user.socketId).emit('deny-audio-outcoming');
             }

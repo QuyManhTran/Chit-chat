@@ -14,6 +14,7 @@ import { RecordingComponent } from './components/share/recording/recording.compo
 import { PreviewRecordingComponent } from './components/share/preview-recording/preview-recording.component';
 import { AudioCallComponent } from './components/audio-call/audio-call.component';
 import { WrapperchatComponent } from './components/wrapperchat/wrapperchat.component';
+import { HiddenMouseDirective } from './directives/events/hiddent-mouse/hidden-mouse.directive';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { WrapperchatComponent } from './components/wrapperchat/wrapperchat.compo
         PreviewRecordingComponent,
         AudioCallComponent,
         WrapperchatComponent,
+        HiddenMouseDirective,
     ],
     imports: [CommonModule, ChatRoutingModule, ReactiveFormsModule, PickerComponent],
 })

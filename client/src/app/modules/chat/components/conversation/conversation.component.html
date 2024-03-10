@@ -1,4 +1,4 @@
-<div class=" relative flex flex-col h-full overflow-hidden" (click)="onCloseEmoji()">
+<div class="relative flex flex-col h-full overflow-hidden" (click)="onCloseEmoji()">
     <div class="flex flex-row items-center justify-between py-[10px] px-5 bg-cgrey-50 text-cgrey-600">
         <div class="flex flex-row items-center">
             <div
@@ -11,12 +11,14 @@
             <span class="text-lg tracking-tighter font-medium">{{caller.name}}</span>
         </div>
         <div class="flex flex-row gap-10 items-center">
-            <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
-                <span class="material-symbols-outlined fill select-none" title="audio call" (click)="onAudioClick()">
+            <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300"
+                (click)="onCallClick(audioType)">
+                <span class="material-symbols-outlined fill select-none" title="audio call">
                     call
                 </span>
             </div>
-            <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300">
+            <div class="px-[4px] py-[4px] flex flex-row items-center justify-between rounded-[50%] hover:bg-cgrey-300"
+                (click)="onCallClick(videoType)">
                 <span class=" relative material-symbols-outlined fill select-none" title="video call">
                     videocam
                     <span *ngIf="onlineUsers.includes(caller.id)"
@@ -108,9 +110,11 @@
                     (click)="onDenyAudioCall(inComingData.sender.id)">
                     Deny</div>
                 <div class="px-2 py-1 rounded-[16px] bg-cgreen-500 shadow-sd3 text-white tracking-tighter font-medium min-w-[60px] cursor-default hover:opacity-70"
-                    (click)="onAcceptAudioCall(inComingData.roomId,inComingData.streamId)">
+                    (click)="onAcceptCall(inComingData.roomId,inComingData.streamId,inComingData.type)">
                     Accept</div>
             </div>
         </div>
     </div>
+    <audio #ringTone src="./assets/audios/ring-tone.mp3" class="absolute" [autoplay]="false" [muted]="false"
+        [loop]="true"></audio>
 </div>

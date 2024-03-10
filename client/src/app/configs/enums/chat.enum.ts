@@ -14,3 +14,8 @@ export enum Call {
     AUDIO = 'audio',
     VIDEO = 'video',
 }
+
+export enum CallStatus {
+    START = 'start',
+    STOP = 'stop',
+}

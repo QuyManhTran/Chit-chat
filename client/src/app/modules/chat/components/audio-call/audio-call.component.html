@@ -1,27 +1,66 @@
-<main class="w-full h-full pt-8 flex flex-col items-center gap-16">
-    <header class="flex flex-col items-center">
-        <h1 class="text-[40px] tracking-tighter font-semibold text-cblack-500 leading-[40px]">
-            {{callerName}}
-        </h1>
-        <span class="block text-base tracking-tighter font-medium">Calling audio</span>
-    </header>
-    <!-- <img src="./assets/images/public/avatars/2.png" alt="avatar.png"
-        class="h-[240px] w-[240px] object-cover rounded-[1/2]"> -->
+<main
+    class="relative w-[100vw] h-[100vh] flex flex-col items-center gap-16 {{(type==='audio'||callStatus==='stop') && 'call-background bg-cyellow-200'}}">
+    <div id="remote-video" class="relative w-full h-full overflow-hidden">
+        <header class="absolute top-[20px] left-1/2 -translate-x-1/2 flex flex-col items-center z-[2]">
+            <h1 class="text-[40px] tracking-tighter font-semibold text-cblack-500 leading-[40px]">
+                {{callerName}}
+            </h1>
+            <span class="block text-base tracking-tighter font-medium">Calling {{callStatus ===
+                'stop'?'finish':type}}</span>
+            <img *ngIf="type === 'audio' || callStatus ==='stop'" src="./assets/images/public/avatars/2.png"
+                alt="avatar.png" class="mt-20 h-[240px] w-[240px] object-cover rounded-[1/2] select-none">
+            <div *ngIf="callStatus==='stop'" class="mt-10">
+                <span class="tabular-nums text-cblack-500 tracking-tighter text-lg font-medium text-center">{{time}}
+                </span>
+            </div>
+        </header>
 
-    <div id="remote-video" class="relative w-[320px] h-[560px]">
         <video #remoteVideo autoplay="true" [playsInline]="true" muted="false"
-            class="w-full h-full object-cover"></video>
+            class="{{callStatus ==='stop' && 'hidden'}} {{type === 'video' && 'w-full h-full object-cover'}}">
+        </video>
         <div #localWrapper id="local-video" style="position: absolute;width: 100%; height: 100%; top: 0;left: 0;"
-            class="z-[1]">
+            class="{{type === 'audio' && 'overflow-hidden'}} transition-all duration-300 {{isHideLocalStream ? 'translate-x-[240px]':'translate-x-0'}}">
             <video #localVideo autoplay="true" [playsInline]="true" muted="false"
-                class="absolute w-full h-full object-cover"></video>
+                class="{{callStatus ==='stop' && 'hidden'}} absolute w-full h-full object-cover border-white z-[1]">
+            </video>
+            <div *ngIf="!isHideLocalStream" (click)="onToggleLocalStream()"
+                class="absolute top-1/2 -right-[30px] -translate-y-1/2 text-cgrey-400 transition-all hover:text-white hover:scale-[1.25] z-[10] cursor-pointer">
+                <span class="material-symbols-rounded text-[32px]">
+                    arrow_forward_ios
+                </span>
+            </div>
+            <div *ngIf="isHideLocalStream" (click)="onToggleLocalStream()"
+                class="absolute top-1/2 -left-[30px] -translate-y-1/2 text-cgrey-400 transition-all hover:text-white hover:scale-[1.25] z-[10] cursor-pointer">
+                <span class="material-symbols-rounded text-[32px]">
+                    arrow_back_ios
+                </span>
+            </div>
         </div>
-        <div class="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-row justify-between z-[2]">
-            <div class="w-12 h-12 bg-danger rounded-[50%] flex flex-row items-center justify-center">
+        <div class="{{callStatus === 'stop' && 'hidden'}} absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-row gap-3 justify-between z-[2]"
+            appHiddenMouse>
+            <div class="absolute bottom-[120%] left-1/2 -translate-x-1/2">
+                <span class="tabular-nums text-cgreen-500 tracking-tighter text-lg font-medium">{{time}}
+                </span>
+            </div>
+            <div class="w-12 h-12 bg-transparent rounded-[50%] flex flex-row items-center justify-center {{type==='audio' ? 'text-cgreen-500':'text-white'}} hover:text-cgreen-500 hover:bg-cgreen-200 cursor-pointer text-[36px]"
+                (click)="onMuteLocalStream()">
+                <span *ngIf="!isMutedLocalStream" class="material-symbols-rounded  select-none">
+                    mic
+                </span>
+                <span *ngIf="isMutedLocalStream" class="material-symbols-rounded select-none">
+                    mic_off
+                </span>
+            </div>
+
+            <div class="w-12 h-12 bg-danger rounded-[50%] flex flex-row items-center justify-center hover:opacity-70 cursor-pointer"
+                (click)="onDestroyStream()">
                 <span class="material-symbols-rounded text-white select-none text-24px">
                     call_end
                 </span>
             </div>
         </div>
     </div>
+    <audio #waitingTone src="./assets/audios/waiting-tone.mp3" class="absolute" [autoplay]="false" [muted]="false"
+        [loop]="true">
+    </audio>
 </main>
