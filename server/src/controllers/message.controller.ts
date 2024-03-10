@@ -1,5 +1,7 @@
+import cloudinary from '@configs/cloudinary.config';
 import { Response, Request } from '@customes/auth.type';
-import { IGetMessages, INewMessage } from '@interfaces/chat.interface';
+import { MessageType } from '@customes/message.type';
+import { IGetMessages, INewAttachment, INewAudio, INewMessage } from '@interfaces/chat.interface';
 import { ConversationModel } from '@models/base/conversation.base';
 import { MessageModel } from '@models/base/message.base';
 
@@ -20,11 +22,86 @@ export default class MessageController {
         }
     };
 
+    static newAttachment = async (req: Request, res: Response) => {
+        const accessToken = res.locals.accessToken;
+        const { chatId, senderId, content, type, name } = <INewAttachment>req.body;
+        try {
+            const response = await cloudinary.uploader.upload(content, {
+                folder: type === MessageType.DOCUMENT ? 'Chit Chat/documents' : 'Chit Chat/images',
+                resource_type: 'auto',
+                public_id: name,
+            });
+            // console.log(response);
+            const message = await MessageModel.create(
+                name
+                    ? { chatId, senderId, content: response.secure_url, type, name }
+                    : { chatId, senderId, content: response.secure_url, type }
+            );
+            await ConversationModel.findOneAndUpdate(
+                { _id: chatId, members: { $in: [senderId] } },
+                {
+                    latestMsg: {
+                        content: message.content,
+                        senderId,
+                        date: new Date(),
+                        type,
+                    },
+                }
+            );
+            res.status(200).json(
+                accessToken ? { data: message, accessToken: accessToken } : { data: message }
+            );
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: 'something went wrong!' });
+        }
+    };
+
+    static newAudio = async (req: Request, res: Response) => {
+        const file = req.file;
+        const accessToken = res.locals.accessToken;
+        const { chatId, senderId, type } = <INewAudio>req.body;
+        try {
+            const response = await cloudinary.uploader.upload(file?.path || '', {
+                folder: 'Chit Chat/audios',
+                resource_type: 'raw',
+            });
+            const message = await MessageModel.create({
+                chatId,
+                senderId,
+                content: response.secure_url,
+                type,
+                name: `audio-${Date.now()}`,
+            });
+            await ConversationModel.findOneAndUpdate(
+                { _id: chatId, members: { $in: [senderId] } },
+                {
+                    latestMsg: {
+                        content: message.content,
+                        senderId,
+                        date: new Date(),
+                        type,
+                    },
+                }
+            );
+            res.status(200).json(
+                accessToken ? { data: message, accessToken: accessToken } : { data: message }
+            );
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: 'something went wrong!' });
+        }
+    };
+
     static newMessage = async (req: Request, res: Response) => {
         const accessToken = res.locals.accessToken;
-        const { chatId, senderId, content } = <INewMessage>req.body;
+        const { chatId, senderId, content, type, name } = <INewMessage>req.body;
         try {
-            const message = await MessageModel.create({ chatId, senderId, content });
+            const message = await MessageModel.create(
+                name
+                    ? { chatId, senderId, content, type, name }
+                    : { chatId, senderId, content, type }
+            );
             await ConversationModel.findOneAndUpdate(
                 { _id: chatId, members: { $in: [senderId] } },
                 {
@@ -32,6 +109,7 @@ export default class MessageController {
                         content,
                         senderId,
                         date: new Date(),
+                        type,
                     },
                 }
             );

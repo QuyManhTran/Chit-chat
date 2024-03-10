@@ -1,0 +1,34 @@
+<div class="flex flex-row items-center w-fit ml-auto gap-3">
+    <i class="fa-solid fa-trash text-[18px] hover:text-cred-500" title="discard" (click)="onDiscard()"></i>
+    <div class="bg-white px-4 py-1 rounded-[25px] flex flex-row items-center gap-2">
+
+        <span *ngIf="!isRecording && !recordedUrl" class="material-symbols-rounded text-[32px] cursor-default"
+            title="resume" (click)="onToggleRecording()">
+            play_arrow
+        </span>
+        <span *ngIf="isRecording && !recordedUrl" class="material-symbols-rounded text-[32px] cursor-default"
+            title="pause" (click)="onToggleRecording()">
+            pause
+        </span>
+        <span *ngIf="!isPlaying && recordedUrl" class="material-symbols-rounded text-[32px] cursor-default"
+            title="resume" (click)="onToggleAudio()">
+            play_arrow
+        </span>
+        <span *ngIf="isPlaying && recordedUrl" class="material-symbols-rounded text-[32px] cursor-default" title="pause"
+            (click)="onToggleAudio()">
+            pause
+        </span>
+        <span *ngIf="!recordedUrl" class="material-symbols-outlined cursor-default" (click)="onStopRecording()"
+            title="stop recording">
+            stop_circle
+        </span>
+        <div id="wavesurfer" class="bg-white px-4 py-1 rounded-[25px] flex flex-row items-center gap-2">
+        </div>
+        <span class="tabular-nums">{{time}}</span>
+    </div>
+    <span *ngIf="recordedUrl" (click)="onSendingAudio()"
+        class="material-symbols-rounded text-cgreen-500 cursor-pointer py-1 px-1 rounded-[50%] hover:bg-cgrey-300"
+        title="send">
+        send
+    </span>
+</div>

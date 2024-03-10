@@ -9,6 +9,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import envConfig from '@configs/env.config';
 import { TokenModel } from '@models/base/token.base';
+import { IZegoToken } from '@interfaces/chat.interface';
+import { generateToken04 } from '@utils/zegoToken';
 export default class AuthController {
     /**
      *
@@ -172,5 +174,25 @@ export default class AuthController {
     static newRefreshToken = async (res: Response, token: string, user: IUserPayload) => {
         await TokenModel.findOneAndDelete({ userId: user._id });
         await TokenModel.create({ userId: user._id, token: token });
+    };
+
+    static generateZegoToken = async (req: Request, res: Response) => {
+        try {
+            const accessToken = res.locals.accessToken;
+            const { appId, serverId, userId } = <IZegoToken>(<unknown>req.query);
+            console.log(typeof appId);
+            const effectiveTime: number = Number.parseInt(envConfig.ZEGO_EFFECTIVE_TIME);
+            const token: string = generateToken04(
+                Number.parseInt(appId),
+                userId,
+                serverId,
+                effectiveTime
+            );
+            res.status(200).json(
+                accessToken ? { accessToken: accessToken, data: token } : { data: token }
+            );
+        } catch (error) {
+            res.status(500).json({ message: 'Something went wrong !' });
+        }
     };
 }

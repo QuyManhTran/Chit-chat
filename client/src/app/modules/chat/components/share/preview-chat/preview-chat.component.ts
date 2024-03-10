@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { MessageType } from '@enums/chat.enum';
 
 @Component({
     selector: 'app-preview-chat',
@@ -16,6 +17,7 @@ export class PreviewChatComponent {
     @Input() isMine!: boolean;
     @Input() isOnline!: boolean;
     @Input() callerId!: string;
+    @Input() type!: MessageType | undefined;
     @Output() activeChatEmiter: EventEmitter<string> = new EventEmitter<string>();
     onActiveConversation = () => {
         this.activeChatEmiter.emit(this.chatId);
