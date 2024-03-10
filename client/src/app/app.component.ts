@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userService.initUser();
+        // this.userService.initUser();
     }
 
     navigationInterceptor = (event: RouterEvent): void => {

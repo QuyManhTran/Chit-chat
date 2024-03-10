@@ -63,7 +63,6 @@ export class AudioCallComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isMutedLocalStream = false;
         this.isHideLocalStream = false;
         this.socketService.socketGetter.on('deny-audio-outcoming', () => {
-            alert('deny');
             this.onDestroyStream();
         });
         this.chatService
@@ -98,8 +97,6 @@ export class AudioCallComponent implements OnInit, OnDestroy, AfterViewInit {
         this.destroy$.next();
         this.destroy$.complete();
         this.onDestroyStream();
-        if (this.waitingToneRef && !this.waitingToneRef.nativeElement.paused)
-            this.waitingToneRef.nativeElement.pause();
     }
 
     ngAfterViewInit(): void {
@@ -172,7 +169,8 @@ export class AudioCallComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.emitSocketCall();
                 }
                 this.zegoService.zgGetter.startPublishingStream(this.streamId, this.localStream);
-                if (this.waitingToneRef) this.waitingToneRef.nativeElement.play();
+                if (this.waitingToneRef && !this.isIncoming)
+                    this.waitingToneRef.nativeElement.play();
             }
         } catch (error) {
             console.log(error);
@@ -186,6 +184,8 @@ export class AudioCallComponent implements OnInit, OnDestroy, AfterViewInit {
         this.zegoService.zgGetter.stopPlayingStream(this.streamId);
         this.zegoService.zgGetter.logoutRoom(this.roomId);
         this.callStatus = CallStatus.STOP;
+        if (this.waitingToneRef && !this.waitingToneRef.nativeElement.paused)
+            this.waitingToneRef.nativeElement.pause();
         if (this.remoteVideoRef)
             this.remoteVideoRef.nativeElement.removeEventListener(
                 'timeupdate',

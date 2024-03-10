@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { IUserInfor } from '@interfaces/chat/user.interface';
 import { ENV } from '@interfaces/environment/environment.interface';
+import { Observable } from 'rxjs';
 import { ENVIRONMENT_SERVICE_CONFIG } from 'src/app/configs/tokens/environment.token';
 import { LOCAL_STORAGE_TOKE } from 'src/app/configs/tokens/storage.token';
 
@@ -38,31 +39,17 @@ export class UserService {
         this.storage.setItem('user', JSON.stringify({ isLogged: this.isLogged }));
     }
 
-    initUser = (): void => {
+    initUser = (): Observable<IUserInfor> | undefined => {
         const storageUser = this.storage.getItem('user');
         if (storageUser === null) {
             this.isLogged = false;
             return;
         }
-        if (storageUser !== null) {
-            this.reAuthHandler();
-        }
+        return this.reAuthHandler();
     };
 
-    reAuthHandler = () => {
-        this.http.get<IUserInfor>(`${this.env_config.host}/auth/re-auth`).subscribe({
-            next: (value) => {
-                console.log(value);
-                this.userSetter = value;
-            },
-            error: (error: HttpErrorResponse) => {
-                console.log(error.error);
-                this.isLogged = false;
-            },
-            complete: () => {
-                this.isLogged = true;
-            },
-        });
+    reAuthHandler = (): Observable<IUserInfor> => {
+        return this.http.get<IUserInfor>(`${this.env_config.host}/auth/re-auth`);
     };
 
     unAuthHandler = () => {
