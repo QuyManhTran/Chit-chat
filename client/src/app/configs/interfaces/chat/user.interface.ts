@@ -100,3 +100,11 @@ export type RoomStreamUpdateCallBack = (
     streamList: ZegoStreamList[],
     extendedData: string
 ) => void;
+
+export interface INewConversation {
+    caller: {
+        id: string;
+        name: string;
+    };
+    senderId: string;
+}

@@ -4,7 +4,9 @@ import {
     IConversation,
     IMessage,
     INewAudio,
+    INewConversation,
     INewMessage,
+    IUserInfor,
     IZegoToken,
 } from '@interfaces/chat/user.interface';
 import { ENV } from '@interfaces/environment/environment.interface';
@@ -122,6 +124,22 @@ export class ChatService {
             formData
         );
     };
+    /* HANDLE FINDING USERS */
+
+    findUsers$ = (keyword: string): Observable<IUserInfor[]> => {
+        return this.http.get<IUserInfor[]>(`${this.env_config.host}/user/find-users`, {
+            params: {
+                keyword,
+            },
+        });
+    };
+
+    creatConversation$ = (data: INewConversation): Observable<IConversation> => {
+        return this.http.post<IConversation>(
+            `${this.env_config.host}/chat/create-conversation`,
+            data
+        );
+    };
 
     /* HANDLE MESSAGE */
 
@@ -164,6 +182,11 @@ export class ChatService {
         });
         this.previewChatsSetter = newPreviewChats;
         this.previewChatsSubGetter$.next(this.previewChats);
+    };
+
+    updateNewConversation = (_newConversation: IConversation) => {
+        this.previewChats = [_newConversation, ...this.previewChats];
+        this.previewChatsSub$.next(this.previewChats);
     };
 
     /* HANDLE AUDIO AND VIDEO CALL */

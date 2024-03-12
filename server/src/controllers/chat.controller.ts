@@ -1,26 +1,32 @@
 import { Request, Response } from '@customes/auth.type';
-import { INewConversation, IPreviewChats } from '@interfaces/chat.interface';
+import { IConversation, INewConversation, IPreviewChats } from '@interfaces/chat.interface';
 import { ConversationModel } from '@models/base/conversation.base';
 import { UserModel } from '@models/base/user.base';
 
 export default class ChatController {
     static createConversation = async (req: Request, res: Response) => {
         const accessToken = res.locals.accessToken;
-        const { firstId, secondId } = <INewConversation>req.body;
-        console.log(firstId, secondId);
+        const { caller, senderId } = <INewConversation>req.body;
         try {
+            if (caller.id === senderId)
+                return res.status(400).json({ message: 'Conversation already exists' });
             const conversation = await ConversationModel.findOne({
-                members: { $all: [firstId, secondId] },
+                members: { $all: [senderId, caller.id] },
             });
             if (conversation)
-                return res.status(200).json({ message: 'Conversation already exists' });
+                return res.status(400).json({ message: 'Conversation already exists' });
             const newConversation = await ConversationModel.create({
-                members: [firstId, secondId],
+                members: [senderId, caller.id],
             });
+
+            const data: IConversation = {
+                ...newConversation.toObject(),
+                isReaded: true,
+                name: caller.name,
+                callerId: caller.id,
+            };
             res.status(200).json(
-                accessToken
-                    ? { data: newConversation, accessToken: accessToken }
-                    : { data: newConversation }
+                accessToken ? { data: data, accessToken: accessToken } : { data: data }
             );
         } catch (error) {
             console.log(error);

@@ -23,12 +23,26 @@
     </div>
 </div>
 <div class="px-6 pt-6 pb-3 flex flex-row items-center gap-8 border-b border-b-cgrey-50 ">
-    <div class="h-[50px] flex-grow rounded-[10px] px-6 bg-cgrey-50  flex flex-row items-center gap-6">
+    <div class="relative h-[50px] flex-grow rounded-[10px] px-6 bg-cgrey-50  flex flex-row items-center gap-6">
         <span class="material-symbols-rounded filter text-[28px] text-cgrey-600 select-none cursor-pointer">
             search
         </span>
-        <input class="text-base text-cgrey-600 font-medium bg-transparent outline-none flex-grow"
+        <input [formControl]="searchForm" (focus)="onFocus()" [spellcheck]="false"
+            class="text-base text-cgrey-600 font-medium bg-transparent outline-none flex-grow"
             placeholder="Search or start new chat">
+        <div *ngIf="findingUsers !== undefined && findingUsers.length !== 0" appHiddenClick
+            (HiddenEmitter)="onClickEvent($event)" [isFocus]="isFocus"
+            class="{{(!isFocus) && 'hidden'}} absolute top-full left-0 w-full px-4 py-4 shadow-sd3 bg-white rounded-[10px] flex flex-col gap-2 z-[1]">
+            <div *ngFor="let user of findingUsers" class="flex flex-row justify-between items-center text-cgrey-600">
+                <img src="./assets/images/public/avatars/2.png" alt="avatar"
+                    class="w-[40px] h-[40px] object-cover rounded-[1/2] border-cgrey-300">
+                <span class="text-xl font-semibold tracking-tighter">{{user.name}}</span>
+                <button type="button" (click)="onCreate(user._id,user.name)"
+                    class="outline-none bg-cgreen-200 px-4 py-3 rounded-[7px] hover:opacity-70 font-semibold">
+                    create
+                </button>
+            </div>
+        </div>
     </div>
     <span class="material-symbols-rounded filter text-[28px] text-cblack-200">
         filter_list

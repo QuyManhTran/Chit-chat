@@ -1,8 +1,28 @@
 import { Call, MessageType } from '@customes/message.type';
 
 export interface INewConversation {
-    firstId: string;
-    secondId: string;
+    caller: {
+        id: string;
+        name: string;
+    };
+    senderId: string;
+}
+
+export interface IConversation {
+    _id: string;
+    name: string;
+    members: string[];
+    callerId: string;
+    latestMsg?: {
+        content: string;
+        senderId: string;
+        date: Date;
+        type: MessageType;
+    };
+    isReaded: boolean;
+    createAt: Date;
+    updatedAt: Date;
+    __v: number;
 }
 
 export interface IPreviewChats {

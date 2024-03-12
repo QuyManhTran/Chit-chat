@@ -1,7 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { UserService } from '@services/user/user.service';
-import { map } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 
 export const chatGuard: CanActivateFn = (route, state) => {
     const userService: UserService = inject(UserService);
@@ -10,6 +11,12 @@ export const chatGuard: CanActivateFn = (route, state) => {
     const init = userService.initUser();
     if (init === undefined) return router.createUrlTree(['/auth/login']);
     return init.pipe(
+        catchError((err: HttpErrorResponse) => {
+            return new Observable<undefined>((subcriber) => {
+                subcriber.next(undefined);
+                subcriber.complete();
+            });
+        }),
         map((value) => {
             if (value) {
                 console.log(value);
